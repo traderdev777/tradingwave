@@ -123,8 +123,8 @@ export function Sidebar({ currentTab, onSelectTab }: SidebarProps) {
           </span>
         </div>
         <div className="flex items-center justify-between">
-          <span>Market:</span>
-          <span className="font-mono text-[10px] text-[var(--text)]">NSE / BSE</span>
+          <span>Markets:</span>
+          <span className="font-mono text-[10px] text-[#D9690F] font-bold">NSE • BSE • MCX</span>
         </div>
       </div>
     </aside>

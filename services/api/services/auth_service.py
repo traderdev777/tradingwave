@@ -288,9 +288,55 @@ def get_or_create_demo_session(db: Session, correlation_id: str) -> SessionRespo
         db.add(s3)
         db.flush()
 
+        s4 = Strategy(
+            workspace_id=ws.id,
+            owner_user_id=user.id,
+            name="MCX Crude Oil 30m ORB Breakout",
+            description="Evening session (17:00-23:30 IST) opening range breakout on MCX Crude Oil futures with ATR trailing stop.",
+            status="published",
+        )
+        db.add(s4)
+        db.flush()
+
+        v4 = StrategyVersion(
+            strategy_id=s4.id,
+            version_number=1,
+            specification={"market": "MCX", "symbol": "CRUDEOIL", "timeframe": "30m"},
+            specification_hash="9a12c842b10f88a91c53e8140a1d65dfc2d4b1fa3d677284addd200126d9069",
+            compiler_version="1.0.0",
+            created_by=user.id,
+        )
+        db.add(v4)
+        db.flush()
+        s4.current_version_id = v4.id
+
+        s5 = Strategy(
+            workspace_id=ws.id,
+            owner_user_id=user.id,
+            name="MCX Gold Mini 15m Mean Reversion",
+            description="RSI(14) oversold/overbought mean reversion on MCX Gold Mini contracts with tight profit bracket.",
+            status="published",
+        )
+        db.add(s5)
+        db.flush()
+
+        v5 = StrategyVersion(
+            strategy_id=s5.id,
+            version_number=1,
+            specification={"market": "MCX", "symbol": "GOLDM", "timeframe": "15m"},
+            specification_hash="3d88b4447dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+            compiler_version="1.0.0",
+            created_by=user.id,
+        )
+        db.add(v5)
+        db.flush()
+        s5.current_version_id = v5.id
+
         b1 = BacktestJob(workspace_id=ws.id, strategy_version_id=v1.id, status="COMPLETED")
         b2 = BacktestJob(workspace_id=ws.id, strategy_version_id=v2.id, status="COMPLETED")
-        db.add_all([b1, b2])
+        b3 = BacktestJob(workspace_id=ws.id, strategy_version_id=v4.id, status="COMPLETED")
+        b4 = BacktestJob(workspace_id=ws.id, strategy_version_id=v5.id, status="COMPLETED")
+        db.add_all([b1, b2, b3, b4])
 
         p1 = PaperSession(workspace_id=ws.id, strategy_version_id=v1.id, status="RUNNING")
         db.add(p1)

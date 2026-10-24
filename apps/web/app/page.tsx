@@ -167,7 +167,7 @@ export default function AppHome() {
               </div>
               <h2 className="text-xl font-bold text-[var(--text)]">AI Strategy Studio</h2>
               <p className="text-xs text-[var(--text-muted)] max-w-md">
-                Convert natural-language strategy descriptions into structured, validated rule specifications for Indian markets.
+                Convert natural-language strategy descriptions into structured, validated rule specifications for Indian markets (NSE, BSE & MCX).
               </p>
               <span className="inline-block px-3 py-1 rounded bg-[var(--surface)] border border-[var(--border)] text-[#D9690F] text-xs font-mono font-semibold">
                 Phase 3 Module — Specification & LLM Gateway Ready
@@ -182,7 +182,7 @@ export default function AppHome() {
               </div>
               <h2 className="text-xl font-bold text-[var(--text)]">Visual Strategy Node Builder</h2>
               <p className="text-xs text-[var(--text-muted)] max-w-md">
-                React Flow node-based editor for indicators (EMA, RSI, Supertrend), conditions, position sizing, and risk stops.
+                React Flow node-based editor for indicators (EMA, RSI, Supertrend, VWAP), conditions, and risk stops across NSE, BSE, and MCX.
               </p>
               <span className="inline-block px-3 py-1 rounded bg-[var(--surface)] border border-[var(--border)] text-[#F6A94B] text-xs font-mono font-semibold">
                 Phase 2 Module — Specification & AST Schema Queued
@@ -197,7 +197,7 @@ export default function AppHome() {
               </div>
               <h2 className="text-xl font-bold text-[var(--text)]">Backtest Simulation Lab</h2>
               <p className="text-xs text-[var(--text-muted)] max-w-md">
-                Deterministic event-driven execution runtime on licensed Indian historical Parquet bars with statutory STT, GST, and slippage models.
+                Deterministic event-driven execution runtime on licensed Indian historical Parquet bars with statutory STT, CTT, GST, and slippage models.
               </p>
               <span className="inline-block px-3 py-1 rounded bg-[var(--surface)] border border-[var(--border)] text-purple-500 text-xs font-mono font-semibold">
                 Phase 4 Module — Parquet Dataset Registry Queued

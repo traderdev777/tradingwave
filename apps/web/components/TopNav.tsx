@@ -89,10 +89,14 @@ export function TopNav({
 
       {/* Right: Indian Market Status, Theme Toggle, & Profile */}
       <div className="flex items-center gap-3">
-        {/* Market Clock Status */}
-        <div className="hidden md:flex items-center gap-2 text-xs text-[var(--text-muted)] bg-[var(--bg)] px-3 py-1.5 rounded-full border border-[var(--border)]">
+        {/* Market Clock Status for NSE/BSE & MCX */}
+        <div className="hidden lg:flex items-center gap-2.5 text-xs text-[var(--text-muted)] bg-[var(--bg)] px-3 py-1.5 rounded-full border border-[var(--border)]">
           <Clock className="w-3.5 h-3.5 text-[#D9690F]" />
-          <span>NSE/BSE (IST): Market Hours 09:15 - 15:30</span>
+          <span className="font-mono text-[11px]">
+            <span className="font-semibold text-[var(--text)]">NSE/BSE</span> 09:15-15:30
+            <span className="mx-1.5 text-[var(--border)]">|</span>
+            <span className="font-semibold text-[var(--text)]">MCX</span> 09:00-23:30 IST
+          </span>
         </div>
 
         {/* Theme Toggle (Light / Dark) */}
