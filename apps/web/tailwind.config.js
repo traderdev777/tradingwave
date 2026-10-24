@@ -10,10 +10,10 @@ module.exports = {
     extend: {
       colors: {
         saffron: {
-          DEFAULT: "#D9690F",
-          dark: "#C25E08",
-          light: "#F6A94B",
-          accent: "#F6A94B",
+          DEFAULT: "#FF7722",
+          dark: "#E65A00",
+          light: "#FFA048",
+          accent: "#FFA048",
         },
         ink: "#12141C",
         cream: "#FFF7EC",

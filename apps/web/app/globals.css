@@ -3,32 +3,34 @@
 @tailwind utilities;
 
 :root {
-  /* Dark Saffron Light Theme */
+  /* Saffron Orange Light Theme */
   --bg: #FFF7EC;
   --surface: #FFFFFF;
   --border: #E8DFD0;
   --text: #12141C;
   --text-muted: #5B6475;
-  --primary: #C25E08;
+  --primary: #FF7722;
+  --primary-hover: #E65A00;
   --primary-text: #FFFFFF;
-  --saffron: #D9690F;
-  --accent: #F6A94B;
+  --saffron: #FF7722;
+  --accent: #FFA048;
   --profit: #0F8A4B;
   --loss: #D92D20;
   --info: #2563EB;
 }
 
 .dark {
-  /* Dark Saffron Dark Theme */
+  /* Saffron Orange Dark Theme */
   --bg: #12141C;
   --surface: #1B1F2B;
   --border: #2C3242;
   --text: #FFF7EC;
   --text-muted: #A9B0C0;
-  --primary: #F6A94B;
-  --primary-text: #12141C;
-  --saffron: #D9690F;
-  --accent: #F6A94B;
+  --primary: #FF7722;
+  --primary-hover: #FFA048;
+  --primary-text: #FFFFFF;
+  --saffron: #FF7722;
+  --accent: #FFA048;
   --profit: #34D399;
   --loss: #F87171;
   --info: #60A5FA;

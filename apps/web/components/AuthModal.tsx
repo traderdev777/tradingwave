@@ -93,7 +93,7 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
         </div>
 
         {/* Instant 1-Click Developer Demo Access */}
-        <div className="mb-4 p-3 rounded-xl bg-[#D9690F]/10 border border-[#D9690F]/25 flex items-center justify-between gap-3">
+        <div className="mb-4 p-3 rounded-xl bg-[#FF7722]/10 border border-[#FF7722]/25 flex items-center justify-between gap-3">
           <div className="text-left">
             <span className="block text-xs font-bold text-[var(--text)]">Instant Developer Sandbox</span>
             <span className="block text-[11px] text-[var(--text-muted)]">One-click access with seeded strategies</span>
@@ -102,7 +102,7 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
             type="button"
             onClick={handleDemoAccess}
             disabled={loading}
-            className="px-3 py-1.5 rounded-lg bg-[#D9690F] hover:bg-[#C25E08] text-white text-xs font-bold shadow transition-all disabled:opacity-50 whitespace-nowrap"
+            className="px-3 py-1.5 rounded-lg bg-[#FF7722] hover:bg-[#E65A00] text-white text-xs font-bold shadow transition-all disabled:opacity-50 whitespace-nowrap"
           >
             Launch Demo Desk →
           </button>
@@ -118,7 +118,7 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
             }}
             className={`flex-1 py-1.5 text-xs font-semibold rounded-md transition-all ${
               !isRegister
-                ? "bg-[#D9690F] text-white shadow-sm"
+                ? "bg-[#FF7722] text-white shadow-sm"
                 : "text-[var(--text-muted)] hover:text-[var(--text)]"
             }`}
           >
@@ -132,7 +132,7 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
             }}
             className={`flex-1 py-1.5 text-xs font-semibold rounded-md transition-all ${
               isRegister
-                ? "bg-[#D9690F] text-white shadow-sm"
+                ? "bg-[#FF7722] text-white shadow-sm"
                 : "text-[var(--text-muted)] hover:text-[var(--text)]"
             }`}
           >
@@ -164,7 +164,7 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
                     placeholder="Arjun Sharma"
                     value={displayName}
                     onChange={(e) => setDisplayName(e.target.value)}
-                    className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg pl-9 pr-3 py-2 text-xs text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#D9690F] focus:ring-1 focus:ring-[#D9690F]"
+                    className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg pl-9 pr-3 py-2 text-xs text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#FF7722] focus:ring-1 focus:ring-[#FF7722]"
                   />
                 </div>
               </div>
@@ -180,7 +180,7 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
                     placeholder="e.g. Nifty Alpha Desk"
                     value={workspaceName}
                     onChange={(e) => setWorkspaceName(e.target.value)}
-                    className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg pl-9 pr-3 py-2 text-xs text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#D9690F] focus:ring-1 focus:ring-[#D9690F]"
+                    className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg pl-9 pr-3 py-2 text-xs text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#FF7722] focus:ring-1 focus:ring-[#FF7722]"
                   />
                 </div>
               </div>
@@ -199,7 +199,7 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
                 placeholder="trader@domain.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg pl-9 pr-3 py-2 text-xs text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#D9690F] focus:ring-1 focus:ring-[#D9690F]"
+                className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg pl-9 pr-3 py-2 text-xs text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#FF7722] focus:ring-1 focus:ring-[#FF7722]"
               />
             </div>
           </div>
@@ -214,7 +214,7 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
                 placeholder="••••••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg pl-9 pr-3 py-2 text-xs text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#D9690F] focus:ring-1 focus:ring-[#D9690F]"
+                className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg pl-9 pr-3 py-2 text-xs text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#FF7722] focus:ring-1 focus:ring-[#FF7722]"
               />
             </div>
             {isRegister && (
@@ -227,7 +227,7 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
           <button
             type="submit"
             disabled={loading}
-            className="w-full mt-4 py-2.5 rounded-lg bg-[#D9690F] hover:bg-[#C25E08] text-white font-semibold text-xs shadow-md transition-all disabled:opacity-50"
+            className="w-full mt-4 py-2.5 rounded-lg bg-[#FF7722] hover:bg-[#E65A00] text-white font-semibold text-xs shadow-md transition-all disabled:opacity-50"
           >
             {loading ? "Processing..." : isRegister ? "Create Free Workspace" : "Sign In to Workspace"}
           </button>

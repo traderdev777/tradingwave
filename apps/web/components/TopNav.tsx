@@ -43,8 +43,8 @@ export function TopNav({
       <div className="flex items-center gap-4">
         {user && activeWorkspace ? (
           <div className="relative group">
-            <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[var(--bg)] border border-[var(--border)] hover:border-[#D9690F] text-xs text-[var(--text)] transition-all">
-              <Building2 className="w-3.5 h-3.5 text-[#D9690F]" />
+            <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[var(--bg)] border border-[var(--border)] hover:border-[#FF7722] text-xs text-[var(--text)] transition-all">
+              <Building2 className="w-3.5 h-3.5 text-[#FF7722]" />
               <span className="font-semibold">{activeWorkspace.name}</span>
               <span className="text-[10px] text-[var(--text-muted)] uppercase font-mono px-1 rounded bg-[var(--surface)] border border-[var(--border)]">
                 {activeWorkspace.plan_code}
@@ -64,7 +64,7 @@ export function TopNav({
                     onClick={() => onSelectWorkspace(ws)}
                     className={`w-full text-left px-2 py-1.5 rounded text-xs flex items-center justify-between ${
                       ws.id === activeWorkspace.id
-                        ? "bg-[#D9690F]/15 text-[#D9690F] font-semibold"
+                        ? "bg-[#FF7722]/15 text-[#FF7722] font-semibold"
                         : "text-[var(--text)] hover:bg-[var(--border)]/40"
                     }`}
                   >
@@ -94,7 +94,7 @@ export function TopNav({
       <div className="flex items-center gap-3">
         {/* Market Clock Status for NSE/BSE & MCX */}
         <div className="hidden lg:flex items-center gap-2.5 text-xs text-[var(--text-muted)] bg-[var(--bg)] px-3 py-1.5 rounded-full border border-[var(--border)]">
-          <Clock className="w-3.5 h-3.5 text-[#D9690F]" />
+          <Clock className="w-3.5 h-3.5 text-[#FF7722]" />
           <span className="font-mono text-[11px]">
             <span className="font-semibold text-[var(--text)]">NSE/BSE</span> 09:15-15:30
             <span className="mx-1.5 text-[var(--border)]">|</span>
@@ -103,7 +103,7 @@ export function TopNav({
         </div>
 
         {/* Global Search Shortcut */}
-        <div className="hidden xl:flex items-center gap-2 bg-[var(--bg)] px-3 py-1.5 rounded-lg border border-[var(--border)] text-xs text-[var(--text-muted)] cursor-pointer hover:border-[#D9690F] transition-colors">
+        <div className="hidden xl:flex items-center gap-2 bg-[var(--bg)] px-3 py-1.5 rounded-lg border border-[var(--border)] text-xs text-[var(--text-muted)] cursor-pointer hover:border-[#FF7722] transition-colors">
           <Search className="w-3.5 h-3.5" />
           <span>Search strategies, symbols, docs...</span>
           <kbd className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[var(--surface)] border border-[var(--border)]">
@@ -118,7 +118,7 @@ export function TopNav({
             className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--border)]/40 transition-colors relative"
           >
             <Bell className="w-4 h-4" />
-            <span className="w-2 h-2 rounded-full bg-[#D9690F] absolute top-1.5 right-1.5" />
+            <span className="w-2 h-2 rounded-full bg-[#FF7722] absolute top-1.5 right-1.5" />
           </button>
         </div>
 
@@ -148,7 +148,7 @@ export function TopNav({
         {user ? (
           <div className="flex items-center gap-3 pl-2 border-l border-[var(--border)]">
             <div className="flex items-center gap-2 text-xs">
-              <div className="w-7 h-7 rounded-full bg-[#D9690F] flex items-center justify-center font-bold text-white text-xs shadow-sm">
+              <div className="w-7 h-7 rounded-full bg-[#FF7722] flex items-center justify-center font-bold text-white text-xs shadow-sm">
                 {user.display_name.charAt(0).toUpperCase()}
               </div>
               <div className="hidden lg:block text-left">

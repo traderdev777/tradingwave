@@ -79,7 +79,7 @@ export function Sidebar({ currentTab, onSelectTab }: SidebarProps) {
               onClick={() => onSelectTab(item.id)}
               className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-all text-left ${
                 isActive
-                  ? "bg-[#D9690F]/15 text-[#D9690F] border border-[#D9690F]/30 font-semibold shadow-sm"
+                  ? "bg-[#FF7722]/15 text-[#FF7722] border border-[#FF7722]/30 font-semibold shadow-sm"
                   : isLocked
                   ? "text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--border)]/30 opacity-70"
                   : "text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--border)]/40"
@@ -87,7 +87,7 @@ export function Sidebar({ currentTab, onSelectTab }: SidebarProps) {
             >
               <Icon
                 className={`w-4 h-4 flex-shrink-0 ${
-                  isActive ? "text-[#D9690F]" : "text-[var(--text-muted)]"
+                  isActive ? "text-[#FF7722]" : "text-[var(--text-muted)]"
                 }`}
               />
               <span className="flex-1 truncate">{item.name}</span>
@@ -118,7 +118,7 @@ export function Sidebar({ currentTab, onSelectTab }: SidebarProps) {
         </div>
         <div className="flex items-center justify-between">
           <span>Markets:</span>
-          <span className="font-mono text-[10px] text-[#D9690F] font-bold">NSE • BSE • MCX</span>
+          <span className="font-mono text-[10px] text-[#FF7722] font-bold">NSE • BSE • MCX</span>
         </div>
       </div>
     </aside>

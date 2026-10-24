@@ -43,7 +43,7 @@ export function AiAssistantWidget({ workspaceId, onNavigateTab }: AiAssistantWid
     <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm space-y-4">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-[var(--border)]">
         <div className="flex items-center gap-2">
-          <div className="p-2 rounded-lg bg-[#D9690F]/15 text-[#D9690F]">
+          <div className="p-2 rounded-lg bg-[#FF7722]/15 text-[#FF7722]">
             <Sparkles className="w-4 h-4" />
           </div>
           <div>
@@ -54,7 +54,7 @@ export function AiAssistantWidget({ workspaceId, onNavigateTab }: AiAssistantWid
           </div>
         </div>
 
-        <span className="text-[10px] font-mono px-2 py-0.5 rounded font-bold bg-[#D9690F]/15 text-[#D9690F] border border-[#D9690F]/30 uppercase self-start sm:self-auto">
+        <span className="text-[10px] font-mono px-2 py-0.5 rounded font-bold bg-[#FF7722]/15 text-[#FF7722] border border-[#FF7722]/30 uppercase self-start sm:self-auto">
           AI Rule Compiler
         </span>
       </div>
@@ -67,12 +67,12 @@ export function AiAssistantWidget({ workspaceId, onNavigateTab }: AiAssistantWid
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="e.g. Build an EMA crossover strategy with an RSI filter on Nifty 5-min..."
-            className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-xl p-3 text-xs text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#D9690F] focus:ring-1 focus:ring-[#D9690F] resize-none pr-12 transition-all"
+            className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-xl p-3 text-xs text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#FF7722] focus:ring-1 focus:ring-[#FF7722] resize-none pr-12 transition-all"
           />
           <button
             type="submit"
             disabled={loading || !prompt.trim()}
-            className="absolute right-2.5 bottom-3.5 p-1.5 rounded-lg bg-[#D9690F] hover:bg-[#C25E08] text-white disabled:opacity-40 transition-all shadow-sm"
+            className="absolute right-2.5 bottom-3.5 p-1.5 rounded-lg bg-[#FF7722] hover:bg-[#E65A00] text-white disabled:opacity-40 transition-all shadow-sm"
           >
             <Send className="w-3.5 h-3.5" />
           </button>
@@ -97,7 +97,7 @@ export function AiAssistantWidget({ workspaceId, onNavigateTab }: AiAssistantWid
       {/* Loading Step Progress */}
       {loading && (
         <div className="p-4 rounded-xl bg-[var(--bg)] border border-[var(--border)] flex items-center gap-3 text-xs text-[var(--text-muted)]">
-          <div className="w-5 h-5 border-2 border-[#D9690F] border-t-transparent rounded-full animate-spin" />
+          <div className="w-5 h-5 border-2 border-[#FF7722] border-t-transparent rounded-full animate-spin" />
           <div className="space-y-0.5">
             <span className="font-semibold text-[var(--text)] block">Synthesizing Strategy Specification...</span>
             <span className="text-[10px] text-[var(--text-muted)] block font-mono">
@@ -117,12 +117,12 @@ export function AiAssistantWidget({ workspaceId, onNavigateTab }: AiAssistantWid
 
       {/* Generated Draft Result Card */}
       {draftResult && !loading && (
-        <div className="p-4 rounded-xl bg-[var(--bg)] border border-[#D9690F]/40 space-y-3 animate-fadeIn">
+        <div className="p-4 rounded-xl bg-[var(--bg)] border border-[#FF7722]/40 space-y-3 animate-fadeIn">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-emerald-500" />
               <span className="font-bold text-xs text-[var(--text)]">{draftResult.strategy_name}</span>
-              <span className="text-[10px] font-mono px-1.5 rounded font-bold bg-[#D9690F]/20 text-[#D9690F]">
+              <span className="text-[10px] font-mono px-1.5 rounded font-bold bg-[#FF7722]/20 text-[#FF7722]">
                 {draftResult.market}:{draftResult.symbol} • {draftResult.timeframe}
               </span>
             </div>
@@ -137,7 +137,7 @@ export function AiAssistantWidget({ workspaceId, onNavigateTab }: AiAssistantWid
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
             <div className="p-2.5 rounded-lg bg-[var(--surface)] border border-[var(--border)] space-y-1">
-              <span className="font-bold text-[var(--text)] block text-[10px] uppercase tracking-wider text-[#D9690F]">
+              <span className="font-bold text-[var(--text)] block text-[10px] uppercase tracking-wider text-[#FF7722]">
                 Entry Conditions:
               </span>
               <ul className="list-disc list-inside space-y-0.5 text-[var(--text-muted)]">
@@ -176,7 +176,7 @@ export function AiAssistantWidget({ workspaceId, onNavigateTab }: AiAssistantWid
               <button
                 type="button"
                 onClick={() => onNavigateTab("backtest_lab")}
-                className="px-3 py-1.5 rounded-lg bg-[#D9690F] hover:bg-[#C25E08] text-white text-xs font-bold shadow-sm transition-all flex items-center gap-1"
+                className="px-3 py-1.5 rounded-lg bg-[#FF7722] hover:bg-[#E65A00] text-white text-xs font-bold shadow-sm transition-all flex items-center gap-1"
               >
                 <span>Run Backtest</span>
                 <ArrowRight className="w-3.5 h-3.5" />

@@ -73,8 +73,8 @@ export function DashboardView({
     return (
       <div className="flex-1 p-8 flex items-center justify-center">
         <div className="flex flex-col items-center gap-3 text-[var(--text-muted)] text-sm">
-          <div className="w-8 h-8 border-2 border-[#D9690F] border-t-transparent rounded-full animate-spin" />
-          <span className="font-mono text-xs tracking-wider">SYNCING ALGOPILOT COMMAND CENTER...</span>
+          <div className="w-8 h-8 border-2 border-[#FF7722] border-t-transparent rounded-full animate-spin" />
+          <span className="font-mono text-xs tracking-wider">SYNCING TRADINGWAVE COMMAND CENTER...</span>
         </div>
       </div>
     );
@@ -84,16 +84,16 @@ export function DashboardView({
     return (
       <div className="flex-1 p-8 flex items-center justify-center">
         <div className="max-w-md text-center p-8 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-xl space-y-4">
-          <div className="w-14 h-14 rounded-2xl bg-[#D9690F]/15 border border-[#D9690F]/30 flex items-center justify-center mx-auto text-[#D9690F]">
+          <div className="w-14 h-14 rounded-2xl bg-[#FF7722]/15 border border-[#FF7722]/30 flex items-center justify-center mx-auto text-[#FF7722]">
             <Lock className="w-7 h-7" />
           </div>
-          <h2 className="text-xl font-bold text-[var(--text)] tracking-tight">Access AlgoPilot Dashboard</h2>
+          <h2 className="text-xl font-bold text-[var(--text)] tracking-tight">Access TradingWave Dashboard</h2>
           <p className="text-xs text-[var(--text-muted)] leading-relaxed">
             Initialize an instant developer sandbox session or connect your credentials to manage strategies, quantitative backtests, and real-time paper trading simulations across NSE, BSE, and MCX.
           </p>
           <button
             onClick={onOpenAuth}
-            className="w-full py-3 rounded-xl bg-[#D9690F] hover:bg-[#C25E08] text-white font-bold text-xs shadow-lg transition-all"
+            className="w-full py-3 rounded-xl bg-[#FF7722] hover:bg-[#E65A00] text-white font-bold text-xs shadow-lg transition-all"
           >
             Launch Instant Developer Workspace →
           </button>
@@ -153,7 +153,7 @@ export function DashboardView({
             <h1 className="text-2xl font-black text-[var(--text)] tracking-tight">
               Trading Dashboard
             </h1>
-            <span className="text-[11px] uppercase font-mono px-2.5 py-0.5 rounded-full font-bold bg-[#D9690F]/15 text-[#D9690F] border border-[#D9690F]/30">
+            <span className="text-[11px] uppercase font-mono px-2.5 py-0.5 rounded-full font-bold bg-[#FF7722]/15 text-[#FF7722] border border-[#FF7722]/30">
               {summary.plan_code} Desk
             </span>
             <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25 flex items-center gap-1">
@@ -170,7 +170,7 @@ export function DashboardView({
         <div className="flex items-center gap-2.5 flex-wrap">
           <button
             onClick={() => onNavigateTab("visual_builder")}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#D9690F] hover:bg-[#C25E08] text-white text-xs font-bold shadow-md hover:shadow transition-all"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#FF7722] hover:bg-[#E65A00] text-white text-xs font-bold shadow-md hover:shadow transition-all"
           >
             <Plus className="w-4 h-4" />
             <span>Create Strategy</span>
@@ -198,7 +198,7 @@ export function DashboardView({
         <div className="p-4 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between text-[var(--text-muted)]">
             <span className="text-[11px] font-semibold uppercase tracking-wider">Active Strategies</span>
-            <div className="p-1.5 rounded-lg bg-[#D9690F]/15 text-[#D9690F]">
+            <div className="p-1.5 rounded-lg bg-[#FF7722]/15 text-[#FF7722]">
               <Cpu className="w-3.5 h-3.5" />
             </div>
           </div>
@@ -215,7 +215,7 @@ export function DashboardView({
           </div>
           <button
             onClick={() => onNavigateTab("strategy_library")}
-            className="mt-3 text-[11px] font-semibold text-[#D9690F] hover:underline flex items-center gap-1"
+            className="mt-3 text-[11px] font-semibold text-[#FF7722] hover:underline flex items-center gap-1"
           >
             <span>Strategy Library</span>
             <ArrowRight className="w-3 h-3" />
@@ -245,7 +245,7 @@ export function DashboardView({
           </div>
           <button
             onClick={() => onNavigateTab("paper_trading")}
-            className="mt-3 text-[11px] font-semibold text-[#D9690F] hover:underline flex items-center gap-1"
+            className="mt-3 text-[11px] font-semibold text-[#FF7722] hover:underline flex items-center gap-1"
           >
             <span>Paper Trading</span>
             <ArrowRight className="w-3 h-3" />
@@ -273,7 +273,7 @@ export function DashboardView({
           </div>
           <button
             onClick={() => onNavigateTab("backtest_lab")}
-            className="mt-3 text-[11px] font-semibold text-[#D9690F] hover:underline flex items-center gap-1"
+            className="mt-3 text-[11px] font-semibold text-[#FF7722] hover:underline flex items-center gap-1"
           >
             <span>Backtest Lab</span>
             <ArrowRight className="w-3 h-3" />
@@ -297,7 +297,7 @@ export function DashboardView({
             </span>
           </div>
           <div className="mt-3 flex items-center gap-1 text-[10px] text-[var(--text-muted)] font-mono">
-            <HelpCircle className="w-3 h-3 text-[#D9690F]" />
+            <HelpCircle className="w-3 h-3 text-[#FF7722]" />
             <span>(Winning / Total) × 100</span>
           </div>
         </div>
@@ -342,7 +342,7 @@ export function DashboardView({
             </div>
             <div className="flex items-center justify-between text-[11px]">
               <span className="text-[var(--text-muted)]">API Latency:</span>
-              <span className="font-mono text-[#D9690F] font-bold">14ms</span>
+              <span className="font-mono text-[#FF7722] font-bold">14ms</span>
             </div>
           </div>
           <div className="mt-3 text-[10px] font-mono text-emerald-500 flex items-center gap-1">
@@ -368,7 +368,7 @@ export function DashboardView({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-[var(--border)]">
           <div>
             <h3 className="text-sm font-bold text-[var(--text)] flex items-center gap-2">
-              <Activity className="w-4 h-4 text-[#D9690F]" />
+              <Activity className="w-4 h-4 text-[#FF7722]" />
               <span>Strategy Activity</span>
             </h3>
             <p className="text-[11px] text-[var(--text-muted)] mt-0.5">
@@ -378,7 +378,7 @@ export function DashboardView({
 
           <button
             onClick={() => onNavigateTab("strategy_library")}
-            className="text-xs text-[#D9690F] hover:underline font-bold flex items-center gap-1"
+            className="text-xs text-[#FF7722] hover:underline font-bold flex items-center gap-1"
           >
             <span>View Full Library</span>
             <ChevronRight className="w-3.5 h-3.5" />
@@ -444,7 +444,7 @@ export function DashboardView({
                       </button>
                       <button
                         onClick={() => onNavigateTab("backtest_lab")}
-                        className="px-2.5 py-1 rounded-md bg-[#D9690F] hover:bg-[#C25E08] text-white text-[11px] font-bold shadow-sm transition-all"
+                        className="px-2.5 py-1 rounded-md bg-[#FF7722] hover:bg-[#E65A00] text-white text-[11px] font-bold shadow-sm transition-all"
                       >
                         Backtest
                       </button>
@@ -478,7 +478,7 @@ export function DashboardView({
             <button
               onClick={() => setPaperFilter("ALL")}
               className={`px-2.5 py-1 text-[10px] font-bold rounded ${
-                paperFilter === "ALL" ? "bg-[#D9690F] text-white" : "text-[var(--text-muted)]"
+                paperFilter === "ALL" ? "bg-[#FF7722] text-white" : "text-[var(--text-muted)]"
               }`}
             >
               All ({paperSessions.length})
@@ -486,7 +486,7 @@ export function DashboardView({
             <button
               onClick={() => setPaperFilter("RUNNING")}
               className={`px-2.5 py-1 text-[10px] font-bold rounded ${
-                paperFilter === "RUNNING" ? "bg-[#D9690F] text-white" : "text-[var(--text-muted)]"
+                paperFilter === "RUNNING" ? "bg-[#FF7722] text-white" : "text-[var(--text-muted)]"
               }`}
             >
               Running
@@ -494,7 +494,7 @@ export function DashboardView({
             <button
               onClick={() => setPaperFilter("PAUSED")}
               className={`px-2.5 py-1 text-[10px] font-bold rounded ${
-                paperFilter === "PAUSED" ? "bg-[#D9690F] text-white" : "text-[var(--text-muted)]"
+                paperFilter === "PAUSED" ? "bg-[#FF7722] text-white" : "text-[var(--text-muted)]"
               }`}
             >
               Paused
@@ -569,7 +569,7 @@ export function DashboardView({
                       </button>
                       <button
                         onClick={() => onNavigateTab("paper_trading")}
-                        className="px-2.5 py-1 rounded-md bg-[#D9690F] hover:bg-[#C25E08] text-white text-[11px] font-bold shadow-sm transition-all"
+                        className="px-2.5 py-1 rounded-md bg-[#FF7722] hover:bg-[#E65A00] text-white text-[11px] font-bold shadow-sm transition-all"
                       >
                         Orders
                       </button>
@@ -604,7 +604,7 @@ export function DashboardView({
                 value={backtestSearch}
                 onChange={(e) => setBacktestSearch(e.target.value)}
                 placeholder="Search backtests..."
-                className="bg-[var(--bg)] border border-[var(--border)] rounded-lg pl-8 pr-2.5 py-1.5 text-xs text-[var(--text)] focus:outline-none focus:border-[#D9690F]"
+                className="bg-[var(--bg)] border border-[var(--border)] rounded-lg pl-8 pr-2.5 py-1.5 text-xs text-[var(--text)] focus:outline-none focus:border-[#FF7722]"
               />
             </div>
 
@@ -612,7 +612,7 @@ export function DashboardView({
               <button
                 onClick={() => setBacktestStatusFilter("ALL")}
                 className={`px-2 py-1 text-[10px] font-bold rounded ${
-                  backtestStatusFilter === "ALL" ? "bg-[#D9690F] text-white" : "text-[var(--text-muted)]"
+                  backtestStatusFilter === "ALL" ? "bg-[#FF7722] text-white" : "text-[var(--text-muted)]"
                 }`}
               >
                 All
@@ -620,7 +620,7 @@ export function DashboardView({
               <button
                 onClick={() => setBacktestStatusFilter("COMPLETED")}
                 className={`px-2 py-1 text-[10px] font-bold rounded ${
-                  backtestStatusFilter === "COMPLETED" ? "bg-[#D9690F] text-white" : "text-[var(--text-muted)]"
+                  backtestStatusFilter === "COMPLETED" ? "bg-[#FF7722] text-white" : "text-[var(--text-muted)]"
                 }`}
               >
                 Completed
@@ -681,7 +681,7 @@ export function DashboardView({
                   <td className="py-3 text-right">
                     <button
                       onClick={() => onNavigateTab("backtest_lab")}
-                      className="px-2.5 py-1 rounded-md bg-[#D9690F] hover:bg-[#C25E08] text-white text-[11px] font-bold shadow-sm transition-all"
+                      className="px-2.5 py-1 rounded-md bg-[#FF7722] hover:bg-[#E65A00] text-white text-[11px] font-bold shadow-sm transition-all"
                     >
                       Open Results
                     </button>

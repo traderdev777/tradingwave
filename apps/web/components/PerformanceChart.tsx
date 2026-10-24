@@ -76,16 +76,16 @@ export function PerformanceChart({
       },
       crosshair: {
         vertLine: {
-          color: "#D9690F",
+          color: "#FF7722",
           width: 1,
           style: 3,
-          labelBackgroundColor: "#D9690F",
+          labelBackgroundColor: "#FF7722",
         },
         horzLine: {
-          color: "#D9690F",
+          color: "#FF7722",
           width: 1,
           style: 3,
-          labelBackgroundColor: "#D9690F",
+          labelBackgroundColor: "#FF7722",
         },
       },
       rightPriceScale: {
@@ -102,9 +102,9 @@ export function PerformanceChart({
     });
 
     const areaSeries = chart.addSeries(AreaSeries, {
-      topColor: "rgba(217, 105, 15, 0.35)",
-      bottomColor: "rgba(217, 105, 15, 0.02)",
-      lineColor: "#D9690F",
+      topColor: "rgba(255, 119, 34, 0.35)",
+      bottomColor: "rgba(255, 119, 34, 0.02)",
+      lineColor: "#FF7722",
       lineWidth: 2,
       priceFormat: {
         type: "price",
@@ -166,7 +166,7 @@ export function PerformanceChart({
     return (
       <div className="p-8 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm text-center space-y-4">
         <div className="w-12 h-12 rounded-2xl bg-[var(--bg)] border border-[var(--border)] flex items-center justify-center mx-auto text-[var(--text-muted)]">
-          <TrendingUp className="w-6 h-6 text-[#D9690F]" />
+          <TrendingUp className="w-6 h-6 text-[#FF7722]" />
         </div>
         <h3 className="text-base font-bold text-[var(--text)]">No Performance Data Yet</h3>
         <p className="text-xs text-[var(--text-muted)] max-w-sm mx-auto">
@@ -175,7 +175,7 @@ export function PerformanceChart({
         <div className="flex justify-center gap-3 pt-2">
           <button
             onClick={() => onNavigateTab("backtest_lab")}
-            className="px-4 py-2 rounded-lg bg-[#D9690F] hover:bg-[#C25E08] text-white text-xs font-bold shadow-sm transition-all"
+            className="px-4 py-2 rounded-lg bg-[#FF7722] hover:bg-[#E65A00] text-white text-xs font-bold shadow-sm transition-all"
           >
             Run Backtest
           </button>
@@ -206,7 +206,7 @@ export function PerformanceChart({
             <h2 className="text-base font-black text-[var(--text)] tracking-tight">
               Performance Overview
             </h2>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded font-bold bg-[#D9690F]/15 text-[#D9690F] border border-[#D9690F]/30 uppercase">
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded font-bold bg-[#FF7722]/15 text-[#FF7722] border border-[#FF7722]/30 uppercase">
               TradingView Canvas
             </span>
           </div>
@@ -219,7 +219,7 @@ export function PerformanceChart({
         <div className="flex flex-wrap items-center gap-3">
           {/* Target Dropdown */}
           <div className="flex items-center gap-1.5 bg-[var(--bg)] px-2.5 py-1.5 rounded-lg border border-[var(--border)] text-xs">
-            <Layers className="w-3.5 h-3.5 text-[#D9690F]" />
+            <Layers className="w-3.5 h-3.5 text-[#FF7722]" />
             <select
               value={selectedKey}
               onChange={(e) => onSelectKey(e.target.value)}
@@ -241,7 +241,7 @@ export function PerformanceChart({
                 onClick={() => onSelectPeriod(p)}
                 className={`px-2 py-1 text-[11px] font-bold rounded transition-all ${
                   selectedPeriod === p
-                    ? "bg-[#D9690F] text-white shadow-sm"
+                    ? "bg-[#FF7722] text-white shadow-sm"
                     : "text-[var(--text-muted)] hover:text-[var(--text)]"
                 }`}
               >
@@ -285,7 +285,7 @@ export function PerformanceChart({
       {/* Footer Info Notice */}
       <div className="flex items-center justify-between text-[11px] text-[var(--text-muted)] pt-2 border-t border-[var(--border)] font-mono">
         <div className="flex items-center gap-1.5">
-          <Info className="w-3.5 h-3.5 text-[#D9690F]" />
+          <Info className="w-3.5 h-3.5 text-[#FF7722]" />
           <span>Currency: INR (₹) • Execution Model: Event-Driven Simulation • STT & Slippage Included</span>
         </div>
         <span>Timeframe: Daily Equity Mark</span>

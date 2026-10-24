@@ -26,10 +26,10 @@ export function RiskAlertsPanel({ alerts, onNavigateTab }: RiskAlertsPanelProps)
     <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-sm space-y-3">
       <div className="flex items-center justify-between pb-2 border-b border-[var(--border)]">
         <div className="flex items-center gap-2">
-          <ShieldCheck className="w-4 h-4 text-[#D9690F]" />
+          <ShieldCheck className="w-4 h-4 text-[#FF7722]" />
           <h3 className="text-sm font-bold text-[var(--text)]">Risk & System Alerts</h3>
         </div>
-        <span className="text-[10px] font-mono px-2 py-0.5 rounded font-bold bg-[#D9690F]/15 text-[#D9690F] border border-[#D9690F]/30">
+        <span className="text-[10px] font-mono px-2 py-0.5 rounded font-bold bg-[#FF7722]/15 text-[#FF7722] border border-[#FF7722]/30">
           {alerts.length} NOTICES
         </span>
       </div>
@@ -57,7 +57,7 @@ export function RiskAlertsPanel({ alerts, onNavigateTab }: RiskAlertsPanelProps)
                   ) : isWarning ? (
                     <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
                   ) : (
-                    <Info className="w-3.5 h-3.5 text-[#D9690F]" />
+                    <Info className="w-3.5 h-3.5 text-[#FF7722]" />
                   )}
                   <span>{alert.title}</span>
                 </div>

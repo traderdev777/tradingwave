@@ -51,7 +51,7 @@ export function BrokerStatusWidget({ liveConnected, message, onNavigateTab }: Br
 
           <div className="p-2.5 rounded-lg bg-[var(--surface)] border border-[var(--border)]">
             <span className="text-[10px] text-[var(--text-muted)] block">SEBI Standard</span>
-            <span className="font-semibold text-[#D9690F]">Feb 2025 Retail Algo</span>
+            <span className="font-semibold text-[#FF7722]">Feb 2025 Retail Algo</span>
           </div>
 
           <div className="p-2.5 rounded-lg bg-[var(--surface)] border border-[var(--border)]">
@@ -74,7 +74,7 @@ export function BrokerStatusWidget({ liveConnected, message, onNavigateTab }: Br
         <button
           type="button"
           onClick={() => onNavigateTab("broker_connections")}
-          className="text-xs font-semibold text-[#D9690F] hover:underline flex items-center gap-1"
+          className="text-xs font-semibold text-[#FF7722] hover:underline flex items-center gap-1"
         >
           <span>Broker Settings</span>
           <ExternalLink className="w-3.5 h-3.5" />

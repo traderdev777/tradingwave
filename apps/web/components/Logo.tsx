@@ -15,7 +15,7 @@ export function Logo({
   size = "md",
   showWordmark = true,
   tagline,
-  brandName = "AlgoPilot",
+  brandName = "TradingWave",
   variant = "saffron",
   className = "",
 }: LogoProps) {
@@ -33,7 +33,7 @@ export function Logo({
 
   return (
     <div className={`inline-flex items-center gap-3 select-none ${className}`}>
-      {/* Saffron Squircle Crest Icon with Rising Wave Arrow */}
+      {/* Saffron Orange Squircle Crest Icon with Rising Wave Arrow */}
       <svg
         width={iconDimensions.width}
         height={iconDimensions.height}
@@ -42,12 +42,12 @@ export function Logo({
         xmlns="http://www.w3.org/2000/svg"
         className="flex-shrink-0 drop-shadow-sm"
       >
-        {/* Rounded squircle background */}
+        {/* Rounded squircle background in saffron orange */}
         <rect
           width="100"
           height="100"
           rx="24"
-          fill={variant === "saffron" ? "#D9690F" : "#12141C"}
+          fill={variant === "saffron" ? "#FF7722" : "#12141C"}
         />
 
         {/* W Wave Path with Ascending Arrowhead */}
@@ -72,8 +72,8 @@ export function Logo({
       {showWordmark && (
         <div className="flex flex-col justify-center leading-tight">
           <div className={`font-black tracking-tight ${textSize}`}>
-            <span className="text-[var(--text)] transition-colors">Algo</span>
-            <span className="text-[#D9690F]">Pilot</span>
+            <span className="text-[var(--text)] transition-colors">Trading</span>
+            <span className="text-[#FF7722]">Wave</span>
           </div>
           {tagline && (
             <span className="text-[9px] tracking-[0.2em] uppercase font-semibold text-[var(--text-muted)] font-mono">

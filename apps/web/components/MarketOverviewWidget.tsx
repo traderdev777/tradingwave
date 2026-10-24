@@ -48,7 +48,7 @@ export function MarketOverviewWidget() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-[var(--border)]">
         <div>
           <h3 className="text-sm font-bold text-[var(--text)] flex items-center gap-2">
-            <TrendingUp className="w-4 h-4 text-[#D9690F]" />
+            <TrendingUp className="w-4 h-4 text-[#FF7722]" />
             <span>Indian Market Watchlist</span>
           </h3>
           <p className="text-[11px] text-[var(--text-muted)] mt-0.5">
@@ -61,7 +61,7 @@ export function MarketOverviewWidget() {
           <button
             onClick={() => setActiveSegment("ALL")}
             className={`px-2.5 py-1 text-[11px] font-bold rounded transition-all ${
-              activeSegment === "ALL" ? "bg-[#D9690F] text-white shadow-sm" : "text-[var(--text-muted)]"
+              activeSegment === "ALL" ? "bg-[#FF7722] text-white shadow-sm" : "text-[var(--text-muted)]"
             }`}
           >
             All ({INSTRUMENT_WATCHLIST.length})
@@ -69,7 +69,7 @@ export function MarketOverviewWidget() {
           <button
             onClick={() => setActiveSegment("NSE")}
             className={`px-2.5 py-1 text-[11px] font-bold rounded transition-all ${
-              activeSegment === "NSE" ? "bg-[#D9690F] text-white shadow-sm" : "text-[var(--text-muted)]"
+              activeSegment === "NSE" ? "bg-[#FF7722] text-white shadow-sm" : "text-[var(--text-muted)]"
             }`}
           >
             NSE / BSE (5)
@@ -77,7 +77,7 @@ export function MarketOverviewWidget() {
           <button
             onClick={() => setActiveSegment("MCX")}
             className={`px-2.5 py-1 text-[11px] font-bold rounded transition-all ${
-              activeSegment === "MCX" ? "bg-[#D9690F] text-white shadow-sm" : "text-[var(--text-muted)]"
+              activeSegment === "MCX" ? "bg-[#FF7722] text-white shadow-sm" : "text-[var(--text-muted)]"
             }`}
           >
             MCX (4)
@@ -93,7 +93,7 @@ export function MarketOverviewWidget() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search by symbol or name (e.g. NIFTY, CRUDEOIL, RELIANCE, GOLD)..."
-          className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-xl pl-9 pr-3 py-2 text-xs text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#D9690F]"
+          className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-xl pl-9 pr-3 py-2 text-xs text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#FF7722]"
         />
       </div>
 
@@ -120,7 +120,7 @@ export function MarketOverviewWidget() {
                   <span
                     className={`text-[9px] font-mono px-1.5 py-0.5 rounded font-bold ${
                       item.exchange === "MCX"
-                        ? "bg-[#D9690F]/15 text-[#D9690F] border border-[#D9690F]/30"
+                        ? "bg-[#FF7722]/15 text-[#FF7722] border border-[#FF7722]/30"
                         : "bg-blue-500/15 text-blue-500 border border-blue-500/30"
                     }`}
                   >
@@ -146,7 +146,7 @@ export function MarketOverviewWidget() {
       {/* Source Indicator */}
       <div className="flex items-center justify-between text-[10px] font-mono text-[var(--text-muted)] pt-2 border-t border-[var(--border)]">
         <div className="flex items-center gap-1.5">
-          <Database className="w-3.5 h-3.5 text-[#D9690F]" />
+          <Database className="w-3.5 h-3.5 text-[#FF7722]" />
           <span>Data Provider: Licensed Parquet Storage Partition (NSE/BSE/MCX OHLCV)</span>
         </div>
         <span>Zero Unlicensed Scraping</span>
