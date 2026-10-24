@@ -46,6 +46,8 @@ yarn-error.log*
 # Database & Storage
 *.sqlite
 *.sqlite3
+*.db
+storage/*.db
 data/
 storage/parquet/
 
