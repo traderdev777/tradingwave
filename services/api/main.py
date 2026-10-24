@@ -3,7 +3,8 @@
 import logging
 import time
 import uuid
-from collections.abc import Callable
+from collections.abc import AsyncGenerator, Callable
+from contextlib import asynccontextmanager
 from typing import Any
 
 from fastapi import FastAPI, Request, Response, status
@@ -13,7 +14,11 @@ from fastapi.responses import JSONResponse
 
 from packages.shared_types.errors import TradingWaveException
 from services.api.config import get_settings
+from services.api.database import Base, engine
+from services.api.routes.auth import router as auth_router
+from services.api.routes.auth import users_router
 from services.api.routes.health import router as health_router
+from services.api.routes.workspaces import router as workspaces_router
 
 # Configure structured logging
 logging.basicConfig(
@@ -24,12 +29,21 @@ logger = logging.getLogger("tradingwave.api")
 
 settings = get_settings()
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
+    """Application lifecycle hooks: initialize database tables."""
+    Base.metadata.create_all(bind=engine)
+    yield
+
+
 app = FastAPI(
     title=settings.APP_NAME,
     version="1.0.0",
     docs_url="/docs" if settings.APP_ENV != "production" else None,
     redoc_url="/redoc" if settings.APP_ENV != "production" else None,
     openapi_url="/openapi.json" if settings.APP_ENV != "production" else None,
+    lifespan=lifespan,
 )
 
 # CORS Configuration
@@ -141,3 +155,6 @@ async def unhandled_exception_handler(
 
 # Include API routers
 app.include_router(health_router, prefix=settings.API_V1_PREFIX)
+app.include_router(auth_router, prefix=settings.API_V1_PREFIX)
+app.include_router(users_router, prefix=settings.API_V1_PREFIX)
+app.include_router(workspaces_router, prefix=settings.API_V1_PREFIX)
