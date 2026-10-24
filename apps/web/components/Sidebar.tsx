@@ -11,11 +11,11 @@ import {
   ZapOff,
   PieChart,
   Link2,
-  Store,
+  TrendingUp,
   FileBarChart,
   CreditCard,
-  ShieldCheck,
-  Sliders,
+  Settings,
+  HelpCircle,
 } from "lucide-react";
 import { Logo } from "./Logo";
 
@@ -30,7 +30,7 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { name: "Dashboard", id: "dashboard", icon: LayoutDashboard },
   { name: "AI Strategy Studio", id: "ai_studio", icon: Sparkles },
-  { name: "Visual Builder", id: "visual_builder", icon: GitFork },
+  { name: "Visual Strategy Builder", id: "visual_builder", icon: GitFork },
   { name: "Strategy Library", id: "strategy_library", icon: Library },
   { name: "Backtest Lab", id: "backtest_lab", icon: FlaskConical },
   { name: "Paper Trading", id: "paper_trading", icon: PlayCircle },
@@ -42,18 +42,12 @@ const NAV_ITEMS: NavItem[] = [
     badgeVariant: "locked",
   },
   { name: "Portfolio & Risk", id: "portfolio_risk", icon: PieChart },
+  { name: "Market Data", id: "market_data", icon: TrendingUp },
   { name: "Broker Connections", id: "broker_connections", icon: Link2 },
-  {
-    name: "Marketplace",
-    id: "marketplace",
-    icon: Store,
-    badge: "Disabled",
-    badgeVariant: "disabled",
-  },
   { name: "Reports", id: "reports", icon: FileBarChart },
-  { name: "Billing", id: "billing", icon: CreditCard },
-  { name: "Account & Security", id: "account_security", icon: ShieldCheck },
-  { name: "Admin Console", id: "admin_console", icon: Sliders },
+  { name: "Billing & Plans", id: "billing", icon: CreditCard },
+  { name: "Settings", id: "settings", icon: Settings },
+  { name: "Help & Documentation", id: "help_docs", icon: HelpCircle },
 ];
 
 interface SidebarProps {

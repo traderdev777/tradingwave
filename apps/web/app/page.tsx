@@ -12,6 +12,7 @@ import {
   getStoredToken,
   getStoredWorkspaceId,
   SessionData,
+  setStoredToken,
   setStoredWorkspaceId,
   UserProfile,
   WorkspaceItem,

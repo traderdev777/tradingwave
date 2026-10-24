@@ -11,6 +11,9 @@ import {
   ShieldAlert,
   Sun,
   User,
+  Search,
+  Bell,
+  HelpCircle,
 } from "lucide-react";
 
 interface TopNavProps {
@@ -98,6 +101,34 @@ export function TopNav({
             <span className="font-semibold text-[var(--text)]">MCX</span> 09:00-23:30 IST
           </span>
         </div>
+
+        {/* Global Search Shortcut */}
+        <div className="hidden xl:flex items-center gap-2 bg-[var(--bg)] px-3 py-1.5 rounded-lg border border-[var(--border)] text-xs text-[var(--text-muted)] cursor-pointer hover:border-[#D9690F] transition-colors">
+          <Search className="w-3.5 h-3.5" />
+          <span>Search strategies, symbols, docs...</span>
+          <kbd className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[var(--surface)] border border-[var(--border)]">
+            ⌘K
+          </kbd>
+        </div>
+
+        {/* Notifications Alert Bell */}
+        <div className="relative">
+          <button
+            title="Notifications & System Safeguards"
+            className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--border)]/40 transition-colors relative"
+          >
+            <Bell className="w-4 h-4" />
+            <span className="w-2 h-2 rounded-full bg-[#D9690F] absolute top-1.5 right-1.5" />
+          </button>
+        </div>
+
+        {/* Help Link */}
+        <button
+          title="Platform Documentation & SEBI Guides"
+          className="p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--border)]/40 transition-colors hidden sm:block"
+        >
+          <HelpCircle className="w-4 h-4" />
+        </button>
 
         {/* Theme Toggle (Light / Dark) */}
         <button

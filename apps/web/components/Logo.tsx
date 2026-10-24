@@ -6,6 +6,7 @@ interface LogoProps {
   size?: "sm" | "md" | "lg";
   showWordmark?: boolean;
   tagline?: string;
+  brandName?: string;
   variant?: "saffron" | "ink";
   className?: string;
 }
@@ -14,6 +15,7 @@ export function Logo({
   size = "md",
   showWordmark = true,
   tagline,
+  brandName = "AlgoPilot",
   variant = "saffron",
   className = "",
 }: LogoProps) {
@@ -49,7 +51,6 @@ export function Logo({
         />
 
         {/* W Wave Path with Ascending Arrowhead */}
-        {/* Stroke 1: Left downward dip, upward crest, downward dip, and right rising surge */}
         <path
           d="M22 36 C23 52, 28 66, 36 66 C42 66, 46 48, 51 48 C56 48, 60 66, 66 66 C72 66, 76 52, 79 38"
           stroke="#FFFFFF"
@@ -70,9 +71,9 @@ export function Logo({
       {/* Wordmark */}
       {showWordmark && (
         <div className="flex flex-col justify-center leading-tight">
-          <div className={`font-bold tracking-tight ${textSize}`}>
-            <span className="text-[var(--text)] transition-colors">Trading</span>
-            <span className="text-[#D9690F]">Wave</span>
+          <div className={`font-black tracking-tight ${textSize}`}>
+            <span className="text-[var(--text)] transition-colors">Algo</span>
+            <span className="text-[#D9690F]">Pilot</span>
           </div>
           {tagline && (
             <span className="text-[9px] tracking-[0.2em] uppercase font-semibold text-[var(--text-muted)] font-mono">
