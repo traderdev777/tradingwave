@@ -18,10 +18,29 @@ from services.api.schemas.auth import (
 )
 from services.api.services.auth_service import (
     authenticate_user,
+    get_or_create_demo_session,
     register_user,
 )
 
 router = APIRouter(prefix="/auth", tags=["Authentication & Identity"])
+
+
+@router.post("/demo-session", response_model=dict)
+def create_demo_session(
+    request: Request,
+    db: Session = Depends(get_db),
+) -> dict:
+    """Retrieve or seed the ready developer demonstration workspace session."""
+    correlation_id = getattr(request.state, "correlation_id", "demo-session")
+    session_data = get_or_create_demo_session(db, correlation_id)
+    return {
+        "data": session_data.model_dump(),
+        "meta": {
+            "request_id": correlation_id,
+            "timestamp": datetime.now(UTC).isoformat(),
+        },
+    }
+
 
 
 @router.post("/register", response_model=dict)

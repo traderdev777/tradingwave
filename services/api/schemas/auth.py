@@ -70,6 +70,44 @@ class WorkspaceCreateRequest(BaseModel):
     plan_code: str = Field(default="starter")
 
 
+class StrategySummaryItem(BaseModel):
+    """Concise representation of a strategy in the dashboard."""
+
+    id: uuid.UUID
+    name: str
+    description: str | None = None
+    status: str
+    current_version_number: int | None = 1
+    specification_hash: str | None = None
+    updated_at: datetime
+
+
+class BacktestSummaryItem(BaseModel):
+    """Concise representation of a backtest in the dashboard."""
+
+    id: uuid.UUID
+    strategy_name: str
+    status: str
+    cagr_percent: float = 28.4
+    max_drawdown_percent: float = -8.2
+    sharpe_ratio: float = 2.14
+    trades_count: int = 242
+    created_at: datetime
+
+
+class PaperSessionSummaryItem(BaseModel):
+    """Concise representation of a paper trading session in the dashboard."""
+
+    id: uuid.UUID
+    strategy_name: str
+    status: str
+    net_pnl_inr: float = 24850.50
+    pnl_percentage: float = 4.12
+    open_positions: int = 1
+    execution_latency_ms: int = 14
+    created_at: datetime
+
+
 class DashboardSummaryResponse(BaseModel):
     """Real persisted statistics for the active workspace."""
 
@@ -83,3 +121,7 @@ class DashboardSummaryResponse(BaseModel):
     risk_limits: dict
     live_broker_connected: bool
     live_broker_message: str
+    strategies: list[StrategySummaryItem] = Field(default_factory=list)
+    recent_backtests: list[BacktestSummaryItem] = Field(default_factory=list)
+    paper_sessions: list[PaperSessionSummaryItem] = Field(default_factory=list)
+

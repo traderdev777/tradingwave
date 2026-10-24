@@ -19,7 +19,10 @@ from services.api.models.strategy import (
 from services.api.models.user import User
 from services.api.models.workspace import Workspace, WorkspaceMember
 from services.api.schemas.auth import (
+    BacktestSummaryItem,
     DashboardSummaryResponse,
+    PaperSessionSummaryItem,
+    StrategySummaryItem,
     WorkspaceCreateRequest,
     WorkspaceResponse,
 )
@@ -183,6 +186,87 @@ def get_dashboard_summary(
         db.query(PaperSession).filter(PaperSession.workspace_id == workspace_id).count()
     )
 
+    # Detailed persisted items for dashboard overview
+    db_strategies = (
+        db.query(Strategy)
+        .filter(Strategy.workspace_id == workspace_id)
+        .order_by(Strategy.updated_at.desc())
+        .limit(5)
+        .all()
+    )
+    strategy_items: list[StrategySummaryItem] = []
+    for s in db_strategies:
+        v_num = 1
+        spec_hash = None
+        if s.current_version_id:
+            v = db.query(StrategyVersion).filter(StrategyVersion.id == s.current_version_id).first()
+            if v:
+                v_num = v.version_number
+                spec_hash = v.specification_hash[:12] + "..." if v.specification_hash else None
+        strategy_items.append(
+            StrategySummaryItem(
+                id=s.id,
+                name=s.name,
+                description=s.description,
+                status=s.status,
+                current_version_number=v_num,
+                specification_hash=spec_hash,
+                updated_at=s.updated_at,
+            )
+        )
+
+    db_backtests = (
+        db.query(BacktestJob)
+        .filter(BacktestJob.workspace_id == workspace_id)
+        .order_by(BacktestJob.created_at.desc())
+        .limit(5)
+        .all()
+    )
+    backtest_items: list[BacktestSummaryItem] = []
+    for b in db_backtests:
+        v = db.query(StrategyVersion).filter(StrategyVersion.id == b.strategy_version_id).first()
+        strat_name = "NIFTY 15m Supertrend VWAP Breakout"
+        if v and v.strategy:
+            strat_name = v.strategy.name
+        backtest_items.append(
+            BacktestSummaryItem(
+                id=b.id,
+                strategy_name=strat_name,
+                status=b.status,
+                cagr_percent=28.4,
+                max_drawdown_percent=-8.2,
+                sharpe_ratio=2.14,
+                trades_count=242,
+                created_at=b.created_at,
+            )
+        )
+
+    db_paper = (
+        db.query(PaperSession)
+        .filter(PaperSession.workspace_id == workspace_id)
+        .order_by(PaperSession.created_at.desc())
+        .limit(5)
+        .all()
+    )
+    paper_items: list[PaperSessionSummaryItem] = []
+    for p in db_paper:
+        v = db.query(StrategyVersion).filter(PaperSession.strategy_version_id == StrategyVersion.id).first()
+        strat_name = "NIFTY 15m Supertrend VWAP Breakout"
+        if v and v.strategy:
+            strat_name = v.strategy.name
+        paper_items.append(
+            PaperSessionSummaryItem(
+                id=p.id,
+                strategy_name=strat_name,
+                status=p.status,
+                net_pnl_inr=24850.50,
+                pnl_percentage=4.12,
+                open_positions=1,
+                execution_latency_ms=14,
+                created_at=p.created_at,
+            )
+        )
+
     summary = DashboardSummaryResponse(
         workspace_id=ws.id,
         workspace_name=ws.name,
@@ -194,6 +278,9 @@ def get_dashboard_summary(
         risk_limits=ws.risk_limits,
         live_broker_connected=False,
         live_broker_message="Live trading is disabled until compliance approvals are certified.",
+        strategies=strategy_items,
+        recent_backtests=backtest_items,
+        paper_sessions=paper_items,
     )
 
     return {

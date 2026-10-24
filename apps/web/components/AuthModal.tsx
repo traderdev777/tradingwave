@@ -51,6 +51,22 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
     }
   }
 
+  async function handleDemoAccess() {
+    setError(null);
+    setLoading(true);
+    try {
+      const session = await api.getDemoSession();
+      setStoredToken(session.token.access_token);
+      setStoredWorkspaceId(session.active_workspace.id);
+      onSuccess(session);
+      onClose();
+    } catch (err: any) {
+      setError(err.message || "Failed to initialize demo workspace.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
       <div className="w-full max-w-md rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-2xl p-6 relative transition-colors">
@@ -74,6 +90,22 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
               ? "Provision your quantitative research workspace for Indian markets"
               : "Access your deterministic strategy library and backtests"}
           </p>
+        </div>
+
+        {/* Instant 1-Click Developer Demo Access */}
+        <div className="mb-4 p-3 rounded-xl bg-[#D9690F]/10 border border-[#D9690F]/25 flex items-center justify-between gap-3">
+          <div className="text-left">
+            <span className="block text-xs font-bold text-[var(--text)]">Instant Developer Sandbox</span>
+            <span className="block text-[11px] text-[var(--text-muted)]">One-click access with seeded strategies</span>
+          </div>
+          <button
+            type="button"
+            onClick={handleDemoAccess}
+            disabled={loading}
+            className="px-3 py-1.5 rounded-lg bg-[#D9690F] hover:bg-[#C25E08] text-white text-xs font-bold shadow transition-all disabled:opacity-50 whitespace-nowrap"
+          >
+            Launch Demo Desk →
+          </button>
         </div>
 
         {/* Tab Switcher */}

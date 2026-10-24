@@ -52,32 +52,43 @@ export default function AppHome() {
     }
   }
 
-  // Load session on mount
+  // Load session on mount - auto-initializes demo developer session for instant readiness
   useEffect(() => {
     async function loadSession() {
       const token = getStoredToken();
-      if (!token) return;
+      if (token) {
+        try {
+          const profile = await api.getMe();
+          setUser(profile.user);
+          setWorkspaces(profile.workspaces);
 
-      try {
-        const profile = await api.getMe();
-        setUser(profile.user);
-        setWorkspaces(profile.workspaces);
+          const storedWsId = getStoredWorkspaceId();
+          const initialWs =
+            profile.workspaces.find((w) => w.id === storedWsId) || profile.workspaces[0];
 
-        const storedWsId = getStoredWorkspaceId();
-        const initialWs =
-          profile.workspaces.find((w) => w.id === storedWsId) || profile.workspaces[0];
-
-        if (initialWs) {
-          setActiveWorkspace(initialWs);
-          setStoredWorkspaceId(initialWs.id);
-          fetchDashboardSummary(initialWs.id);
+          if (initialWs) {
+            setActiveWorkspace(initialWs);
+            setStoredWorkspaceId(initialWs.id);
+            fetchDashboardSummary(initialWs.id);
+            return;
+          }
+        } catch (err) {
+          console.warn("Stored session invalid, fallback to instant demo session:", err);
+          clearStoredToken();
         }
+      }
+
+      // Auto-load instant developer workspace so dashboard is immediately ready
+      try {
+        const demo = await api.getDemoSession();
+        setStoredToken(demo.token.access_token);
+        setStoredWorkspaceId(demo.active_workspace.id);
+        setUser(demo.user);
+        setWorkspaces(demo.workspaces);
+        setActiveWorkspace(demo.active_workspace);
+        fetchDashboardSummary(demo.active_workspace.id);
       } catch (err) {
-        console.warn("Session check failed or expired:", err);
-        clearStoredToken();
-        setUser(null);
-        setWorkspaces([]);
-        setActiveWorkspace(null);
+        console.error("Failed to load demo workspace session:", err);
       }
     }
 
