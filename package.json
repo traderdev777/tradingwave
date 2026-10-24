@@ -1,0 +1,26 @@
+{
+  "name": "tradingwave",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI-Powered Algorithmic Trading SaaS for Indian Markets",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=apps/web",
+    "build": "npm run build --workspace=apps/web",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present"
+  },
+  "keywords": [
+    "algorithmic-trading",
+    "sebi",
+    "indian-markets",
+    "backtesting",
+    "quant",
+    "saas"
+  ],
+  "author": "TradingWave Team",
+  "license": "UNLICENSED"
+}

@@ -1,0 +1,100 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: tradingwave_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-tradingwave}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-tradingwave_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-tradingwave_dev}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-tradingwave} -d ${POSTGRES_DB:-tradingwave_dev}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: tradingwave_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/Dockerfile.api
+    container_name: tradingwave_api
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file:
+      - .env.example
+    environment:
+      DATABASE_URL: postgresql://tradingwave:tradingwave_secret@postgres:5432/tradingwave_dev
+      ASYNC_DATABASE_URL: postgresql+asyncpg://tradingwave:tradingwave_secret@postgres:5432/tradingwave_dev
+      REDIS_URL: redis://redis:6379/0
+      LIVE_TRADING_ENABLED: "false"
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - storage_data:/app/storage
+
+  worker:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/Dockerfile.worker
+    container_name: tradingwave_worker
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file:
+      - .env.example
+    environment:
+      DATABASE_URL: postgresql://tradingwave:tradingwave_secret@postgres:5432/tradingwave_dev
+      ASYNC_DATABASE_URL: postgresql+asyncpg://tradingwave:tradingwave_secret@postgres:5432/tradingwave_dev
+      REDIS_URL: redis://redis:6379/0
+      LIVE_TRADING_ENABLED: "false"
+    volumes:
+      - .:/app
+      - storage_data:/app/storage
+
+  web:
+    build:
+      context: .
+      dockerfile: infrastructure/docker/Dockerfile.web
+    container_name: tradingwave_web
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./apps/web:/app/apps/web
+      - /app/apps/web/node_modules
+      - /app/apps/web/.next
+
+volumes:
+  postgres_data:
+  redis_data:
+  storage_data:
