@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { api, SessionData, setStoredToken, setStoredWorkspaceId } from "../lib/api";
 import { X, Lock, Mail, User, Building2, AlertCircle } from "lucide-react";
+import { Logo } from "./Logo";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -51,24 +52,24 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
-      <div className="w-full max-w-md rounded-2xl bg-[#0b101b] border border-slate-800 shadow-2xl p-6 relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+      <div className="w-full max-w-md rounded-2xl bg-[var(--surface)] border border-[var(--border)] shadow-2xl p-6 relative transition-colors">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/80 transition-colors"
+          className="absolute top-4 right-4 p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--border)]/40 transition-colors"
         >
           <X className="w-4 h-4" />
         </button>
 
-        {/* Modal Header */}
-        <div className="text-center space-y-1 pb-4">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-500 flex items-center justify-center font-bold text-white text-lg mx-auto shadow-lg shadow-cyan-950">
-            🌊
+        {/* Modal Header with Saffron Logo */}
+        <div className="text-center space-y-2 pb-4">
+          <div className="flex justify-center">
+            <Logo size="md" showWordmark tagline="TRADE BINDAS" />
           </div>
-          <h2 className="text-lg font-bold text-white pt-2">
-            {isRegister ? "Create TradingWave Account" : "Sign In to TradingWave"}
+          <h2 className="text-base font-bold text-[var(--text)] pt-2">
+            {isRegister ? "Create TradingWave Account" : "Sign In to Workspace"}
           </h2>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-[var(--text-muted)]">
             {isRegister
               ? "Provision your quantitative research workspace for Indian markets"
               : "Access your deterministic strategy library and backtests"}
@@ -76,7 +77,7 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex rounded-lg bg-slate-900/80 p-1 mb-4 border border-slate-800">
+        <div className="flex rounded-lg bg-[var(--bg)] p-1 mb-4 border border-[var(--border)]">
           <button
             type="button"
             onClick={() => {
@@ -84,7 +85,9 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
               setError(null);
             }}
             className={`flex-1 py-1.5 text-xs font-semibold rounded-md transition-all ${
-              !isRegister ? "bg-cyan-600 text-white shadow-sm" : "text-slate-400 hover:text-slate-200"
+              !isRegister
+                ? "bg-[#D9690F] text-white shadow-sm"
+                : "text-[var(--text-muted)] hover:text-[var(--text)]"
             }`}
           >
             Sign In
@@ -96,7 +99,9 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
               setError(null);
             }}
             className={`flex-1 py-1.5 text-xs font-semibold rounded-md transition-all ${
-              isRegister ? "bg-cyan-600 text-white shadow-sm" : "text-slate-400 hover:text-slate-200"
+              isRegister
+                ? "bg-[#D9690F] text-white shadow-sm"
+                : "text-[var(--text-muted)] hover:text-[var(--text)]"
             }`}
           >
             Register Account
@@ -105,8 +110,8 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
 
         {/* Error Alert */}
         {error && (
-          <div className="mb-4 p-3 rounded-lg bg-red-950/60 border border-red-900/80 text-red-300 text-xs flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 flex-shrink-0 text-red-400" />
+          <div className="mb-4 p-3 rounded-lg bg-[var(--loss)]/10 border border-[var(--loss)]/30 text-[var(--loss)] text-xs flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 flex-shrink-0" />
             <span>{error}</span>
           </div>
         )}
@@ -116,30 +121,34 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
           {isRegister && (
             <>
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">Full Name</label>
+                <label className="block text-xs font-medium text-[var(--text)] mb-1">
+                  Full Name
+                </label>
                 <div className="relative">
-                  <User className="w-4 h-4 text-slate-500 absolute left-3 top-2.5" />
+                  <User className="w-4 h-4 text-[var(--text-muted)] absolute left-3 top-2.5" />
                   <input
                     type="text"
                     required
                     placeholder="Arjun Sharma"
                     value={displayName}
                     onChange={(e) => setDisplayName(e.target.value)}
-                    className="w-full bg-slate-900/90 border border-slate-700 rounded-lg pl-9 pr-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
+                    className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg pl-9 pr-3 py-2 text-xs text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#D9690F] focus:ring-1 focus:ring-[#D9690F]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">Initial Workspace Name</label>
+                <label className="block text-xs font-medium text-[var(--text)] mb-1">
+                  Initial Workspace Name
+                </label>
                 <div className="relative">
-                  <Building2 className="w-4 h-4 text-slate-500 absolute left-3 top-2.5" />
+                  <Building2 className="w-4 h-4 text-[var(--text-muted)] absolute left-3 top-2.5" />
                   <input
                     type="text"
                     placeholder="e.g. Nifty Alpha Desk"
                     value={workspaceName}
                     onChange={(e) => setWorkspaceName(e.target.value)}
-                    className="w-full bg-slate-900/90 border border-slate-700 rounded-lg pl-9 pr-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
+                    className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg pl-9 pr-3 py-2 text-xs text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#D9690F] focus:ring-1 focus:ring-[#D9690F]"
                   />
                 </div>
               </div>
@@ -147,42 +156,46 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
           )}
 
           <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">Email Address</label>
+            <label className="block text-xs font-medium text-[var(--text)] mb-1">
+              Email Address
+            </label>
             <div className="relative">
-              <Mail className="w-4 h-4 text-slate-500 absolute left-3 top-2.5" />
+              <Mail className="w-4 h-4 text-[var(--text-muted)] absolute left-3 top-2.5" />
               <input
                 type="email"
                 required
                 placeholder="trader@domain.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-slate-900/90 border border-slate-700 rounded-lg pl-9 pr-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
+                className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg pl-9 pr-3 py-2 text-xs text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#D9690F] focus:ring-1 focus:ring-[#D9690F]"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">Password</label>
+            <label className="block text-xs font-medium text-[var(--text)] mb-1">Password</label>
             <div className="relative">
-              <Lock className="w-4 h-4 text-slate-500 absolute left-3 top-2.5" />
+              <Lock className="w-4 h-4 text-[var(--text-muted)] absolute left-3 top-2.5" />
               <input
                 type="password"
                 required
                 placeholder="••••••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-slate-900/90 border border-slate-700 rounded-lg pl-9 pr-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
+                className="w-full bg-[var(--bg)] border border-[var(--border)] rounded-lg pl-9 pr-3 py-2 text-xs text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[#D9690F] focus:ring-1 focus:ring-[#D9690F]"
               />
             </div>
             {isRegister && (
-              <span className="block text-[10px] text-slate-500 mt-1">Must be at least 8 characters long</span>
+              <span className="block text-[10px] text-[var(--text-muted)] mt-1">
+                Must be at least 8 characters long
+              </span>
             )}
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full mt-4 py-2.5 rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-semibold text-xs shadow-lg shadow-cyan-950 transition-all disabled:opacity-50"
+            className="w-full mt-4 py-2.5 rounded-lg bg-[#D9690F] hover:bg-[#C25E08] text-white font-semibold text-xs shadow-md transition-all disabled:opacity-50"
           >
             {loading ? "Processing..." : isRegister ? "Create Free Workspace" : "Sign In to Workspace"}
           </button>

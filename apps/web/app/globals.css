@@ -3,13 +3,60 @@
 @tailwind utilities;
 
 :root {
-  --background: #090d16;
-  --foreground: #f8fafc;
+  /* Dark Saffron Light Theme */
+  --bg: #FFF7EC;
+  --surface: #FFFFFF;
+  --border: #E8DFD0;
+  --text: #12141C;
+  --text-muted: #5B6475;
+  --primary: #C25E08;
+  --primary-text: #FFFFFF;
+  --saffron: #D9690F;
+  --accent: #F6A94B;
+  --profit: #0F8A4B;
+  --loss: #D92D20;
+  --info: #2563EB;
+}
+
+.dark {
+  /* Dark Saffron Dark Theme */
+  --bg: #12141C;
+  --surface: #1B1F2B;
+  --border: #2C3242;
+  --text: #FFF7EC;
+  --text-muted: #A9B0C0;
+  --primary: #F6A94B;
+  --primary-text: #12141C;
+  --saffron: #D9690F;
+  --accent: #F6A94B;
+  --profit: #34D399;
+  --loss: #F87171;
+  --info: #60A5FA;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: var(--text);
+  background-color: var(--bg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   min-height: 100vh;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Custom scrollbar styling matching theme */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
 }

@@ -2,7 +2,6 @@
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./features/**/*.{js,ts,jsx,tsx,mdx}",
   ],
@@ -10,19 +9,25 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: {
-          50: "#eef7ff",
-          100: "#d9ecff",
-          200: "#bcdfff",
-          500: "#0284c7",
-          600: "#0369a1",
-          700: "#075985",
-          900: "#0c4a6e",
+        saffron: {
+          DEFAULT: "#D9690F",
+          dark: "#C25E08",
+          light: "#F6A94B",
+          accent: "#F6A94B",
         },
-        surface: {
-          DEFAULT: "#0f172a",
-          secondary: "#1e293b",
-          tertiary: "#334155",
+        ink: "#12141C",
+        cream: "#FFF7EC",
+        theme: {
+          bg: "var(--bg)",
+          surface: "var(--surface)",
+          border: "var(--border)",
+          text: "var(--text)",
+          muted: "var(--text-muted)",
+          primary: "var(--primary)",
+          "primary-text": "var(--primary-text)",
+          profit: "var(--profit)",
+          loss: "var(--loss)",
+          info: "var(--info)",
         },
       },
     },

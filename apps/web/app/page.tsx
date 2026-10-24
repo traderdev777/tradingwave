@@ -26,6 +26,31 @@ export default function AppHome() {
   const [dashboardSummary, setDashboardSummary] = useState<DashboardSummary | null>(null);
   const [loadingSummary, setLoadingSummary] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(true);
+
+  // Initialize theme from storage or default to dark
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("tradingwave_theme");
+    const isDark = savedTheme !== "light";
+    setIsDarkTheme(isDark);
+    if (isDark) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, []);
+
+  function handleToggleTheme() {
+    const nextDark = !isDarkTheme;
+    setIsDarkTheme(nextDark);
+    if (nextDark) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("tradingwave_theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("tradingwave_theme", "light");
+    }
+  }
 
   // Load session on mount
   useEffect(() => {
@@ -95,17 +120,19 @@ export default function AppHome() {
   }
 
   return (
-    <div className="flex h-screen bg-[#070b13] text-slate-100 overflow-hidden font-sans">
+    <div className="flex h-screen bg-[var(--bg)] text-[var(--text)] overflow-hidden font-sans transition-colors">
       {/* Primary Sidebar */}
       <Sidebar currentTab={currentTab} onSelectTab={setCurrentTab} />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 bg-[#090d16] overflow-hidden">
+      <div className="flex-1 flex flex-col min-w-0 bg-[var(--bg)] overflow-hidden">
         {/* Top Header */}
         <TopNav
           user={user}
           workspaces={workspaces}
           activeWorkspace={activeWorkspace}
+          isDarkTheme={isDarkTheme}
+          onToggleTheme={handleToggleTheme}
           onSelectWorkspace={handleSelectWorkspace}
           onOpenAuth={() => setIsAuthOpen(true)}
           onLogout={handleLogout}
@@ -124,14 +151,14 @@ export default function AppHome() {
 
           {currentTab === "ai_studio" && (
             <div className="flex-1 p-8 flex flex-col items-center justify-center text-center space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-cyan-950/60 border border-cyan-800 flex items-center justify-center text-cyan-400">
+              <div className="w-12 h-12 rounded-2xl bg-[#D9690F]/15 border border-[#D9690F]/30 flex items-center justify-center text-[#D9690F]">
                 <Sparkles className="w-6 h-6" />
               </div>
-              <h2 className="text-xl font-bold text-white">AI Strategy Studio</h2>
-              <p className="text-xs text-slate-400 max-w-md">
+              <h2 className="text-xl font-bold text-[var(--text)]">AI Strategy Studio</h2>
+              <p className="text-xs text-[var(--text-muted)] max-w-md">
                 Convert natural-language strategy descriptions into structured, validated rule specifications for Indian markets.
               </p>
-              <span className="inline-block px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-cyan-400 text-xs font-mono">
+              <span className="inline-block px-3 py-1 rounded bg-[var(--surface)] border border-[var(--border)] text-[#D9690F] text-xs font-mono font-semibold">
                 Phase 3 Module — Specification & LLM Gateway Ready
               </span>
             </div>
@@ -139,14 +166,14 @@ export default function AppHome() {
 
           {currentTab === "visual_builder" && (
             <div className="flex-1 p-8 flex flex-col items-center justify-center text-center space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-blue-950/60 border border-blue-800 flex items-center justify-center text-blue-400">
+              <div className="w-12 h-12 rounded-2xl bg-[#F6A94B]/15 border border-[#F6A94B]/30 flex items-center justify-center text-[#F6A94B]">
                 <GitFork className="w-6 h-6" />
               </div>
-              <h2 className="text-xl font-bold text-white">Visual Strategy Node Builder</h2>
-              <p className="text-xs text-slate-400 max-w-md">
+              <h2 className="text-xl font-bold text-[var(--text)]">Visual Strategy Node Builder</h2>
+              <p className="text-xs text-[var(--text-muted)] max-w-md">
                 React Flow node-based editor for indicators (EMA, RSI, Supertrend), conditions, position sizing, and risk stops.
               </p>
-              <span className="inline-block px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-blue-400 text-xs font-mono">
+              <span className="inline-block px-3 py-1 rounded bg-[var(--surface)] border border-[var(--border)] text-[#F6A94B] text-xs font-mono font-semibold">
                 Phase 2 Module — Specification & AST Schema Queued
               </span>
             </div>
@@ -154,14 +181,14 @@ export default function AppHome() {
 
           {currentTab === "backtest_lab" && (
             <div className="flex-1 p-8 flex flex-col items-center justify-center text-center space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-purple-950/60 border border-purple-800 flex items-center justify-center text-purple-400">
+              <div className="w-12 h-12 rounded-2xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-500">
                 <FlaskConical className="w-6 h-6" />
               </div>
-              <h2 className="text-xl font-bold text-white">Backtest Simulation Lab</h2>
-              <p className="text-xs text-slate-400 max-w-md">
+              <h2 className="text-xl font-bold text-[var(--text)]">Backtest Simulation Lab</h2>
+              <p className="text-xs text-[var(--text-muted)] max-w-md">
                 Deterministic event-driven execution runtime on licensed Indian historical Parquet bars with statutory STT, GST, and slippage models.
               </p>
-              <span className="inline-block px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-purple-400 text-xs font-mono">
+              <span className="inline-block px-3 py-1 rounded bg-[var(--surface)] border border-[var(--border)] text-purple-500 text-xs font-mono font-semibold">
                 Phase 4 Module — Parquet Dataset Registry Queued
               </span>
             </div>
@@ -169,14 +196,14 @@ export default function AppHome() {
 
           {currentTab === "paper_trading" && (
             <div className="flex-1 p-8 flex flex-col items-center justify-center text-center space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-950/60 border border-emerald-800 flex items-center justify-center text-emerald-400">
+              <div className="w-12 h-12 rounded-2xl bg-[var(--profit)]/15 border border-[var(--profit)]/30 flex items-center justify-center text-[var(--profit)]">
                 <PlayCircle className="w-6 h-6" />
               </div>
-              <h2 className="text-xl font-bold text-white">Paper Trading Simulation</h2>
-              <p className="text-xs text-slate-400 max-w-md">
+              <h2 className="text-xl font-bold text-[var(--text)]">Paper Trading Simulation</h2>
+              <p className="text-xs text-[var(--text-muted)] max-w-md">
                 Virtual order-state machine and real-time market data replay with position ledgers and zero live-capital risk.
               </p>
-              <span className="inline-block px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-emerald-400 text-xs font-mono">
+              <span className="inline-block px-3 py-1 rounded bg-[var(--surface)] border border-[var(--border)] text-[var(--profit)] text-xs font-mono font-semibold">
                 Phase 5 Module — Virtual Ledger Queued
               </span>
             </div>
@@ -184,14 +211,14 @@ export default function AppHome() {
 
           {currentTab === "live_trading" && (
             <div className="flex-1 p-8 flex flex-col items-center justify-center text-center space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-amber-950/60 border border-amber-800 flex items-center justify-center text-amber-400">
+              <div className="w-12 h-12 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-500">
                 <Lock className="w-6 h-6" />
               </div>
-              <h2 className="text-xl font-bold text-white">Live Execution Gatekeeper</h2>
-              <p className="text-xs text-slate-400 max-w-md">
+              <h2 className="text-xl font-bold text-[var(--text)]">Live Execution Gatekeeper</h2>
+              <p className="text-xs text-[var(--text-muted)] max-w-md">
                 Live broker routing is locked. Under SEBI regulations (Feb 2025 Retail Algo circular) and exchange empanelment procedures, live trading cannot activate without verified compliance records.
               </p>
-              <span className="inline-block px-2.5 py-1 rounded bg-amber-950/80 border border-amber-900 text-amber-400 text-xs font-mono">
+              <span className="inline-block px-3 py-1 rounded bg-amber-500/20 border border-amber-500/40 text-amber-600 dark:text-amber-400 text-xs font-mono font-semibold">
                 Compliance Gate D/E Active
               </span>
             </div>
@@ -206,13 +233,13 @@ export default function AppHome() {
             "live_trading",
           ].includes(currentTab) && (
             <div className="flex-1 p-8 flex flex-col items-center justify-center text-center space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400">
+              <div className="w-12 h-12 rounded-2xl bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-[var(--text-muted)]">
                 <ShieldCheck className="w-6 h-6" />
               </div>
-              <h2 className="text-lg font-bold text-white capitalize">
+              <h2 className="text-lg font-bold text-[var(--text)] capitalize">
                 {currentTab.replace("_", " ")}
               </h2>
-              <p className="text-xs text-slate-400 max-w-md">
+              <p className="text-xs text-[var(--text-muted)] max-w-md">
                 This module is scheduled in accordance with the progressive phase rollout blueprint.
               </p>
             </div>
