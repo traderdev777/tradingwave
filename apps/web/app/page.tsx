@@ -5,6 +5,7 @@ import { Sidebar } from "../components/Sidebar";
 import { TopNav } from "../components/TopNav";
 import { DashboardView } from "../components/DashboardView";
 import { AuthModal } from "../components/AuthModal";
+import { AiStrategyStudio } from "../components/ai_studio/AiStrategyStudio";
 import {
   api,
   clearStoredToken,
@@ -162,18 +163,10 @@ export default function AppHome() {
           )}
 
           {currentTab === "ai_studio" && (
-            <div className="flex-1 p-8 flex flex-col items-center justify-center text-center space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-[#FF7722]/15 border border-[#FF7722]/30 flex items-center justify-center text-[#FF7722]">
-                <Sparkles className="w-6 h-6" />
-              </div>
-              <h2 className="text-xl font-bold text-[var(--text)]">AI Strategy Studio</h2>
-              <p className="text-xs text-[var(--text-muted)] max-w-md">
-                Convert natural-language strategy descriptions into structured, validated rule specifications for Indian markets (NSE, BSE & MCX).
-              </p>
-              <span className="inline-block px-3 py-1 rounded bg-[var(--surface)] border border-[var(--border)] text-[#FF7722] text-xs font-mono font-semibold">
-                Phase 3 Module — Specification & LLM Gateway Ready
-              </span>
-            </div>
+            <AiStrategyStudio
+              workspace={activeWorkspace}
+              onNavigateTab={setCurrentTab}
+            />
           )}
 
           {currentTab === "visual_builder" && (

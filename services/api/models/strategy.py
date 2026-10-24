@@ -186,3 +186,54 @@ class PaperSession(Base):
         default=lambda: datetime.now(UTC),
         nullable=False,
     )
+
+
+class StrategyConversation(Base):
+    """Persisted AI Strategy Studio conversation history."""
+
+    __tablename__ = "strategy_conversations"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        GUID,
+        primary_key=True,
+        default=uuid.uuid4,
+    )
+    workspace_id: Mapped[uuid.UUID] = mapped_column(
+        GUID,
+        ForeignKey("workspaces.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    strategy_id: Mapped[uuid.UUID | None] = mapped_column(
+        GUID,
+        ForeignKey("strategies.id", ondelete="SET NULL"),
+        nullable=True,
+        index=True,
+    )
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        GUID,
+        ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    title: Mapped[str] = mapped_column(
+        String(200),
+        default="New AI Strategy Conversation",
+        nullable=False,
+    )
+    messages: Mapped[list] = mapped_column(
+        JSONType,
+        default=list,
+        nullable=False,
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(UTC),
+        nullable=False,
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(UTC),
+        onupdate=lambda: datetime.now(UTC),
+        nullable=False,
+    )
+

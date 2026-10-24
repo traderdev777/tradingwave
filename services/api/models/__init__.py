@@ -5,6 +5,7 @@ from services.api.models.strategy import (
     BacktestJob,
     PaperSession,
     Strategy,
+    StrategyConversation,
     StrategyVersion,
 )
 from services.api.models.user import User
@@ -15,6 +16,7 @@ __all__ = [
     "BacktestJob",
     "PaperSession",
     "Strategy",
+    "StrategyConversation",
     "StrategyVersion",
     "User",
     "Workspace",

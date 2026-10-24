@@ -169,7 +169,7 @@ export function DashboardView({
         {/* Primary Working Actions */}
         <div className="flex items-center gap-2.5 flex-wrap">
           <button
-            onClick={() => onNavigateTab("visual_builder")}
+            onClick={() => onNavigateTab("ai_studio")}
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#FF7722] hover:bg-[#E65A00] text-white text-xs font-bold shadow-md hover:shadow transition-all"
           >
             <Plus className="w-4 h-4" />

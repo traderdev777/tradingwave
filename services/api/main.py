@@ -19,6 +19,7 @@ from services.api.routes.auth import router as auth_router
 from services.api.routes.auth import users_router
 from services.api.routes.health import router as health_router
 from services.api.routes.workspaces import router as workspaces_router
+from services.api.routes.ai_studio import router as ai_studio_router
 
 # Configure structured logging
 logging.basicConfig(
@@ -158,3 +159,4 @@ app.include_router(health_router, prefix=settings.API_V1_PREFIX)
 app.include_router(auth_router, prefix=settings.API_V1_PREFIX)
 app.include_router(users_router, prefix=settings.API_V1_PREFIX)
 app.include_router(workspaces_router, prefix=settings.API_V1_PREFIX)
+app.include_router(ai_studio_router, prefix=settings.API_V1_PREFIX)
