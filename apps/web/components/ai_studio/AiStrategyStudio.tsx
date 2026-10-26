@@ -28,11 +28,16 @@ import {
   Layers,
   Check,
   AlertCircle,
+  GitFork,
 } from "lucide-react";
 
 interface AiStrategyStudioProps {
   workspace: WorkspaceItem | null;
   onNavigateTab: (tabId: string) => void;
+  sharedSpec?: StrategySpec;
+  onSpecChange?: (spec: StrategySpec) => void;
+  savedStrategyId?: string | null;
+  onSavedStrategyIdChange?: (id: string | null) => void;
 }
 
 const DEFAULT_STRATEGY_SPEC: StrategySpec = {
@@ -43,7 +48,46 @@ const DEFAULT_STRATEGY_SPEC: StrategySpec = {
   exchange: "NSE",
   symbol: "NIFTY50",
   timeframe: "15m",
+  entry_timeframe: "5m",
+  exit_timeframe: "1m",
+  trading_mode: "INTRADAY",
+  direction: "BOTH",
   trading_session: "09:15-15:30 IST",
+  orb_settings: {
+    enabled: false,
+    range_start_time: "09:15",
+    range_end_time: "09:30",
+    entry_start_time: "09:30",
+    entry_cutoff_time: "14:45",
+    calculation_timeframe: "5m",
+    confirmation_method: "CANDLE_CLOSE",
+    breakout_buffer_pct: 0.1,
+    one_entry_per_breakout: true,
+    max_entries_per_session: 2,
+    range_basis: "HIGH_LOW",
+    allow_opposite_side_reentry: false,
+  },
+  btst_settings: {
+    enabled: false,
+    entry_window_start: "15:00",
+    entry_window_end: "15:25",
+    next_session_exit_start: "09:15",
+    next_session_exit_cutoff: "09:30",
+    gap_risk_acknowledged: false,
+    squareoff_on_gap_breach: true,
+  },
+  tsl_settings: {
+    enabled: false,
+    activation_type: "POINTS",
+    activation_value: 20.0,
+    distance_type: "POINTS",
+    distance_value: 10.0,
+    step_value: 5.0,
+    atr_multiplier: 1.5,
+    update_timeframe: "1m",
+    evaluation_candle_offset: -1,
+    lock_profit_at_activation: true,
+  },
   indicators: [
     { id: "ind_ema9", type: "EMA", period: 9, source: "close" },
     { id: "ind_ema21", type: "EMA", period: 21, source: "close" },
@@ -55,17 +99,157 @@ const DEFAULT_STRATEGY_SPEC: StrategySpec = {
     conditions: [
       {
         id: "cond_ema_cross",
-        left: { type: "indicator", indicator_type: "EMA", offset: 0 },
+        left: { type: "indicator", indicator_type: "EMA", offset: 0, timeframe: "15m" },
         operator: "CROSSES_ABOVE",
-        right: { type: "indicator", indicator_type: "EMA", offset: 0 },
+        right: { type: "indicator", indicator_type: "EMA", offset: 0, timeframe: "15m" },
         description: "EMA(9) crosses above EMA(21) on NIFTY50 15m",
       },
       {
         id: "cond_rsi_filter",
-        left: { type: "indicator", indicator_type: "RSI", offset: 0 },
+        left: { type: "indicator", indicator_type: "RSI", offset: 0, timeframe: "15m" },
         operator: "GREATER_THAN",
         right: { type: "constant", constant_value: 50.0, offset: 0 },
         description: "RSI(14) > 50 confirming momentum expansion",
+      },
+    ],
+  },
+  call_entry_rules: {
+    id: "grp_call_entry_root",
+    logic: "OR",
+    conditions: [],
+    nested_groups: [
+      {
+        id: "grp_call_a",
+        logic: "AND",
+        conditions: [
+          {
+            id: "rule_call_a1",
+            left: { type: "price_field", price_field: "close", offset: -2, timeframe: "5m" },
+            operator: "LESS_THAN",
+            right: { type: "price_field", price_field: "orb_high", offset: 0 },
+            description: "Candle -2 Close < ORB High",
+          },
+          {
+            id: "rule_call_a2",
+            left: { type: "price_field", price_field: "close", offset: -1, timeframe: "5m" },
+            operator: "GREATER_THAN",
+            right: { type: "price_field", price_field: "orb_high", offset: 0 },
+            description: "Candle -1 Close > ORB High",
+          },
+        ],
+        nested_groups: [],
+      },
+      {
+        id: "grp_call_b",
+        logic: "AND",
+        conditions: [
+          {
+            id: "rule_call_b1",
+            left: { type: "price_field", price_field: "close", offset: -2, timeframe: "5m" },
+            operator: "LESS_THAN",
+            right: { type: "price_field", price_field: "orb_low", offset: 0 },
+            description: "Candle -2 Close < ORB Low",
+          },
+          {
+            id: "rule_call_b2",
+            left: { type: "price_field", price_field: "close", offset: -1, timeframe: "5m" },
+            operator: "GREATER_THAN",
+            right: { type: "price_field", price_field: "orb_low", offset: 0 },
+            description: "Candle -1 Close > ORB Low",
+          },
+        ],
+        nested_groups: [],
+      },
+    ],
+  },
+  put_entry_rules: {
+    id: "grp_put_entry_root",
+    logic: "OR",
+    conditions: [],
+    nested_groups: [
+      {
+        id: "grp_put_a",
+        logic: "AND",
+        conditions: [
+          {
+            id: "rule_put_a1",
+            left: { type: "price_field", price_field: "close", offset: -2, timeframe: "5m" },
+            operator: "GREATER_THAN",
+            right: { type: "price_field", price_field: "orb_low", offset: 0 },
+            description: "Candle -2 Close > ORB Low",
+          },
+          {
+            id: "rule_put_a2",
+            left: { type: "price_field", price_field: "close", offset: -1, timeframe: "5m" },
+            operator: "LESS_THAN",
+            right: { type: "price_field", price_field: "orb_low", offset: 0 },
+            description: "Candle -1 Close < ORB Low",
+          },
+        ],
+        nested_groups: [],
+      },
+      {
+        id: "grp_put_b",
+        logic: "AND",
+        conditions: [
+          {
+            id: "rule_put_b1",
+            left: { type: "price_field", price_field: "close", offset: -2, timeframe: "5m" },
+            operator: "GREATER_THAN",
+            right: { type: "price_field", price_field: "orb_high", offset: 0 },
+            description: "Candle -2 Close > ORB High",
+          },
+          {
+            id: "rule_put_b2",
+            left: { type: "price_field", price_field: "close", offset: -1, timeframe: "5m" },
+            operator: "LESS_THAN",
+            right: { type: "price_field", price_field: "orb_high", offset: 0 },
+            description: "Candle -1 Close < ORB High",
+          },
+        ],
+        nested_groups: [],
+      },
+    ],
+  },
+  call_exit_rules: {
+    id: "grp_call_exit_root",
+    logic: "OR",
+    conditions: [],
+    nested_groups: [
+      {
+        id: "grp_call_exit_a",
+        logic: "AND",
+        conditions: [
+          {
+            id: "rule_call_exit_1",
+            left: { type: "price_field", price_field: "close", offset: -1, timeframe: "1m" },
+            operator: "LESS_THAN",
+            right: { type: "price_field", price_field: "orb_midpoint", offset: 0 },
+            description: "Candle -1 Close < ORB Midpoint",
+          },
+        ],
+        nested_groups: [],
+      },
+    ],
+  },
+  put_exit_rules: {
+    id: "grp_put_exit_root",
+    logic: "OR",
+    conditions: [],
+    nested_groups: [
+      {
+        id: "grp_put_exit_a",
+        logic: "AND",
+        conditions: [
+          {
+            id: "rule_put_exit_1",
+            left: { type: "price_field", price_field: "close", offset: -1, timeframe: "1m" },
+            operator: "GREATER_THAN",
+            right: { type: "price_field", price_field: "orb_midpoint", offset: 0 },
+            description: "Candle -1 Close > ORB Midpoint",
+          },
+        ],
+        nested_groups: [],
       },
     ],
   },
@@ -123,9 +307,16 @@ const WELCOME_CHAT_MESSAGE: ChatMessage = {
   ],
 };
 
-export function AiStrategyStudio({ workspace, onNavigateTab }: AiStrategyStudioProps) {
+export function AiStrategyStudio({
+  workspace,
+  onNavigateTab,
+  sharedSpec,
+  onSpecChange,
+  savedStrategyId: savedStrategyIdProp,
+  onSavedStrategyIdChange,
+}: AiStrategyStudioProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([WELCOME_CHAT_MESSAGE]);
-  const [spec, setSpec] = useState<StrategySpec>(DEFAULT_STRATEGY_SPEC);
+  const [spec, setSpec] = useState<StrategySpec>(sharedSpec || DEFAULT_STRATEGY_SPEC);
   const [validation, setValidation] = useState<ValidationReport | null>(null);
   const [howItWorks, setHowItWorks] = useState<string[]>([
     "1. Monitors NIFTY50 on NSE using 15m candlestick bars during 09:15-15:30 IST.",
@@ -141,8 +332,14 @@ export function AiStrategyStudio({ workspace, onNavigateTab }: AiStrategyStudioP
   ]);
   const [aiProviderName, setAiProviderName] = useState("TradingWave Deterministic Engine (Local)");
   const [conversationId, setConversationId] = useState<string | null>(null);
-  const [savedStrategyId, setSavedStrategyId] = useState<string | null>(null);
+  const [savedStrategyId, setSavedStrategyId] = useState<string | null>(savedStrategyIdProp || null);
   const [lastSavedVersion, setLastSavedVersion] = useState<SaveStrategyResponse | null>(null);
+
+  useEffect(() => {
+    if (sharedSpec && sharedSpec !== spec) {
+      setSpec(sharedSpec);
+    }
+  }, [sharedSpec]);
 
   const [loadingChat, setLoadingChat] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -176,6 +373,9 @@ export function AiStrategyStudio({ workspace, onNavigateTab }: AiStrategyStudioP
 
   function handleSpecChange(updatedSpec: StrategySpec) {
     setSpec(updatedSpec);
+    if (onSpecChange) {
+      onSpecChange(updatedSpec);
+    }
     triggerValidation(updatedSpec);
   }
 
@@ -208,6 +408,9 @@ export function AiStrategyStudio({ workspace, onNavigateTab }: AiStrategyStudioP
       setConversationId(resp.conversation_id);
       setMessages((prev) => [...prev, resp.message]);
       setSpec(resp.spec);
+      if (onSpecChange) {
+        onSpecChange(resp.spec);
+      }
       setValidation(resp.validation);
       setHowItWorks(resp.how_it_works);
       setFailureModes(resp.failure_modes);
@@ -232,8 +435,10 @@ export function AiStrategyStudio({ workspace, onNavigateTab }: AiStrategyStudioP
     if (confirm("Reset conversation and restore default institutional template?")) {
       setMessages([WELCOME_CHAT_MESSAGE]);
       setSpec(DEFAULT_STRATEGY_SPEC);
+      if (onSpecChange) onSpecChange(DEFAULT_STRATEGY_SPEC);
       setConversationId(null);
       setSavedStrategyId(null);
+      if (onSavedStrategyIdChange) onSavedStrategyIdChange(null);
       setLastSavedVersion(null);
       triggerValidation(DEFAULT_STRATEGY_SPEC);
     }
@@ -252,6 +457,9 @@ export function AiStrategyStudio({ workspace, onNavigateTab }: AiStrategyStudioP
       });
 
       setSavedStrategyId(resp.strategy_id);
+      if (onSavedStrategyIdChange) {
+        onSavedStrategyIdChange(resp.strategy_id);
+      }
       setLastSavedVersion(resp);
       setNotification({
         type: "success",
@@ -371,6 +579,16 @@ export function AiStrategyStudio({ workspace, onNavigateTab }: AiStrategyStudioP
 
         {/* Global Action Buttons */}
         <div className="flex items-center gap-2 flex-wrap">
+          <button
+            type="button"
+            onClick={() => onNavigateTab("visual_builder")}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FF7722]/10 hover:bg-[#FF7722]/20 border border-[#FF7722]/30 text-xs font-bold text-[#FF7722] shadow-sm transition-all"
+            title="Open in Visual Strategy Node Builder"
+          >
+            <GitFork className="w-3.5 h-3.5" />
+            <span>Open in Visual Builder</span>
+          </button>
+
           <button
             type="button"
             onClick={handleSaveStrategy}

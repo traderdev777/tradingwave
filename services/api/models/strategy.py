@@ -3,11 +3,107 @@
 import uuid
 from datetime import UTC, datetime
 
-from sqlalchemy import DateTime, ForeignKey, Integer, String, Text, UniqueConstraint
+from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String, Text, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from services.api.database import Base
 from services.api.models.types import GUID, JSONType
+
+
+class StrategyFolder(Base):
+    """Folder container to organize strategies within a workspace."""
+
+    __tablename__ = "strategy_folders"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        GUID,
+        primary_key=True,
+        default=uuid.uuid4,
+    )
+    workspace_id: Mapped[uuid.UUID] = mapped_column(
+        GUID,
+        ForeignKey("workspaces.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    name: Mapped[str] = mapped_column(
+        String(100),
+        nullable=False,
+    )
+    color: Mapped[str | None] = mapped_column(
+        String(30),
+        nullable=True,
+    )
+    description: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True,
+    )
+    created_by: Mapped[uuid.UUID] = mapped_column(
+        GUID,
+        ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(UTC),
+        nullable=False,
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(UTC),
+        onupdate=lambda: datetime.now(UTC),
+        nullable=False,
+    )
+
+    # Relationships
+    strategies = relationship("Strategy", back_populates="folder")
+
+
+class StrategyCollection(Base):
+    """User-curated collection of strategies within a workspace."""
+
+    __tablename__ = "strategy_collections"
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        GUID,
+        primary_key=True,
+        default=uuid.uuid4,
+    )
+    workspace_id: Mapped[uuid.UUID] = mapped_column(
+        GUID,
+        ForeignKey("workspaces.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    name: Mapped[str] = mapped_column(
+        String(100),
+        nullable=False,
+    )
+    description: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True,
+    )
+    strategy_ids: Mapped[list] = mapped_column(
+        JSONType,
+        default=list,
+        nullable=False,
+    )
+    created_by: Mapped[uuid.UUID] = mapped_column(
+        GUID,
+        ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(UTC),
+        nullable=False,
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(UTC),
+        onupdate=lambda: datetime.now(UTC),
+        nullable=False,
+    )
 
 
 class Strategy(Base):
@@ -41,13 +137,35 @@ class Strategy(Base):
         nullable=True,
     )
     status: Mapped[str] = mapped_column(
-        String(20),
+        String(30),
         default="draft",
-        nullable=False,  # "draft", "published", "archived"
+        nullable=False,  # "draft", "needs_clarification", "validation_failed", "validated", "backtest_pending", "backtested", "paper_trading", "archived"
     )
     current_version_id: Mapped[uuid.UUID | None] = mapped_column(
         GUID,
         nullable=True,
+    )
+    folder_id: Mapped[uuid.UUID | None] = mapped_column(
+        GUID,
+        ForeignKey("strategy_folders.id", ondelete="SET NULL"),
+        nullable=True,
+        index=True,
+    )
+    is_favorite: Mapped[bool] = mapped_column(
+        Boolean,
+        default=False,
+        nullable=False,
+        index=True,
+    )
+    tags: Mapped[list] = mapped_column(
+        JSONType,
+        default=list,
+        nullable=False,
+    )
+    source: Mapped[str] = mapped_column(
+        String(50),
+        default="CUSTOM",
+        nullable=False,  # "AI_STUDIO", "VISUAL_BUILDER", "TEMPLATE", "CUSTOM"
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
@@ -63,6 +181,7 @@ class Strategy(Base):
 
     # Relationships
     workspace = relationship("Workspace", back_populates="strategies")
+    folder = relationship("StrategyFolder", back_populates="strategies")
     versions = relationship(
         "StrategyVersion",
         back_populates="strategy",
@@ -107,6 +226,14 @@ class StrategyVersion(Base):
         default="1.0.0",
         nullable=False,
     )
+    change_summary: Mapped[str | None] = mapped_column(
+        String(255),
+        nullable=True,
+    )
+    validation_report: Mapped[dict | None] = mapped_column(
+        JSONType,
+        nullable=True,
+    )
     created_by: Mapped[uuid.UUID] = mapped_column(
         GUID,
         ForeignKey("users.id", ondelete="CASCADE"),
@@ -148,11 +275,30 @@ class BacktestJob(Base):
         default="QUEUED",
         nullable=False,  # "QUEUED", "RUNNING", "COMPLETED", "FAILED", "CANCELLED"
     )
+    configuration: Mapped[dict | None] = mapped_column(
+        JSONType,
+        nullable=True,
+    )
+    metrics: Mapped[dict | None] = mapped_column(
+        JSONType,
+        nullable=True,
+    )
+    error_message: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True,
+    )
+    completed_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         default=lambda: datetime.now(UTC),
         nullable=False,
     )
+
+    # Relationships
+    strategy_version = relationship("StrategyVersion")
 
 
 class PaperSession(Base):

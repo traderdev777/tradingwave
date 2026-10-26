@@ -29,12 +29,12 @@ interface ConversationPanelProps {
 }
 
 const SUGGESTED_PROMPT_CHIPS = [
-  "Create a NIFTY intraday EMA crossover strategy with stop loss",
-  "Build an RSI mean-reversion strategy on BankNifty with 15m timeframe",
-  "Create an opening-range breakout strategy for MCX Crude Oil",
+  "I want to build an ORB strategy for NIFTY",
+  "Make the exit timeframe 1 minute and activate TSL after 20 points profit",
+  "Build a BTST strategy on NIFTY with overnight holding",
+  "Create a 5m candle close > ORB High and 15m RSI(14) > 50 entry rule",
   "Add a 1.5× ATR trailing stop loss and mandatory 15:15 IST square-off",
   "Review this strategy for repainting and lookahead bias",
-  "Enforce a ₹15,000 hard daily loss limit and max 2 open positions",
 ];
 
 export function ConversationPanel({

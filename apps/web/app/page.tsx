@@ -6,6 +6,8 @@ import { TopNav } from "../components/TopNav";
 import { DashboardView } from "../components/DashboardView";
 import { AuthModal } from "../components/AuthModal";
 import { AiStrategyStudio } from "../components/ai_studio/AiStrategyStudio";
+import { VisualStrategyBuilder } from "../components/visual_builder/VisualStrategyBuilder";
+import { StrategyLibraryView } from "../components/strategy_library/StrategyLibraryView";
 import {
   api,
   clearStoredToken,
@@ -15,6 +17,7 @@ import {
   SessionData,
   setStoredToken,
   setStoredWorkspaceId,
+  StrategySpec,
   UserProfile,
   WorkspaceItem,
 } from "../lib/api";
@@ -23,6 +26,8 @@ import { Lock, Sparkles, GitFork, FlaskConical, PlayCircle, ShieldCheck } from "
 export default function AppHome() {
   const [currentTab, setCurrentTab] = useState("dashboard");
   const [user, setUser] = useState<UserProfile | null>(null);
+  const [sharedSpec, setSharedSpec] = useState<StrategySpec | null>(null);
+  const [sharedStrategyId, setSharedStrategyId] = useState<string | null>(null);
   const [workspaces, setWorkspaces] = useState<WorkspaceItem[]>([]);
   const [activeWorkspace, setActiveWorkspace] = useState<WorkspaceItem | null>(null);
   const [dashboardSummary, setDashboardSummary] = useState<DashboardSummary | null>(null);
@@ -166,22 +171,39 @@ export default function AppHome() {
             <AiStrategyStudio
               workspace={activeWorkspace}
               onNavigateTab={setCurrentTab}
+              sharedSpec={sharedSpec || undefined}
+              onSpecChange={setSharedSpec}
+              savedStrategyId={sharedStrategyId}
+              onSavedStrategyIdChange={setSharedStrategyId}
             />
           )}
 
           {currentTab === "visual_builder" && (
-            <div className="flex-1 p-8 flex flex-col items-center justify-center text-center space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-[#FFA048]/15 border border-[#FFA048]/30 flex items-center justify-center text-[#FFA048]">
-                <GitFork className="w-6 h-6" />
-              </div>
-              <h2 className="text-xl font-bold text-[var(--text)]">Visual Strategy Node Builder</h2>
-              <p className="text-xs text-[var(--text-muted)] max-w-md">
-                React Flow node-based editor for indicators (EMA, RSI, Supertrend, VWAP), conditions, and risk stops across NSE, BSE, and MCX.
-              </p>
-              <span className="inline-block px-3 py-1 rounded bg-[var(--surface)] border border-[var(--border)] text-[#FFA048] text-xs font-mono font-semibold">
-                Phase 2 Module — Specification & AST Schema Queued
-              </span>
-            </div>
+            <VisualStrategyBuilder
+              workspace={activeWorkspace}
+              onNavigateTab={setCurrentTab}
+              sharedSpec={sharedSpec || undefined}
+              onSpecChange={setSharedSpec}
+              savedStrategyId={sharedStrategyId}
+              onSavedStrategyIdChange={setSharedStrategyId}
+            />
+          )}
+
+          {currentTab === "strategy_library" && (
+            <StrategyLibraryView
+              workspace={activeWorkspace}
+              onNavigateTab={setCurrentTab}
+              onOpenInAIStudio={(spec, id) => {
+                setSharedSpec(spec);
+                setSharedStrategyId(id);
+                setCurrentTab("ai_studio");
+              }}
+              onOpenInVisualBuilder={(spec, id) => {
+                setSharedSpec(spec);
+                setSharedStrategyId(id);
+                setCurrentTab("visual_builder");
+              }}
+            />
           )}
 
           {currentTab === "backtest_lab" && (
@@ -233,6 +255,7 @@ export default function AppHome() {
             "dashboard",
             "ai_studio",
             "visual_builder",
+            "strategy_library",
             "backtest_lab",
             "paper_trading",
             "live_trading",
